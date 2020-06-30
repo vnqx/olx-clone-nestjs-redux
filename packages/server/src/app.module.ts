@@ -1,3 +1,5 @@
+import { PostingsModule } from "./users/postings.module";
+import { DatabaseModule } from "./database.module";
 import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -6,6 +8,7 @@ import Joi from "@hapi/joi";
 
 @Module({
   imports: [
+    PostingsModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -16,6 +19,7 @@ import Joi from "@hapi/joi";
         PORT: Joi.number(),
       }),
     }),
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
