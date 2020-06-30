@@ -16,6 +16,8 @@
     "sourceMap": true,
     "incremental": true,
     "outDir": "./dist",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "alwaysStrict": true,
+    "noImplicitAny": true
   }
 }

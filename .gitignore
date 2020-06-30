@@ -1,7 +1,8 @@
 .vscode
 node_modules
-
+packages/*/docker.env
 packages/*/node_modules
 packages/*/.env
 packages/*/.env.development
 packages/*/.env.test
+packages/*/data
