@@ -1,5 +1,6 @@
 .vscode
 node_modules
+dist
 packages/*/docker.env
 packages/*/node_modules
 packages/*/.env

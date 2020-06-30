@@ -8,7 +8,7 @@ export default class PostingsController {
   constructor(private readonly postingsService: PostingsService) {}
 
   @Get()
-  getAllPostings(): Posting[] {
+  getAllPostings(): Promise<Posting[]> {
     return this.postingsService.getAllPostings();
   }
 

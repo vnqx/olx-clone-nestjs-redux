@@ -1,4 +1,4 @@
-import { PostingsModule } from "./users/postings.module";
+import { PostingsModule } from "./postings/postings.module";
 import { DatabaseModule } from "./database.module";
 import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";

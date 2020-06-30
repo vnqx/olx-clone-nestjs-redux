@@ -1,23 +1,23 @@
 import { Injectable } from "@nestjs/common";
 import Posting from "./posting.entity";
 import { CreatePostingDto } from "./dto/createPosting.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export default class PostingsService {
-  private postings: Posting[] = [];
-  private lastPostingId = 0;
+  constructor(
+    @InjectRepository(Posting) private postingsRepository: Repository<Posting>,
+  ) {}
 
-  getAllPostings() {
-    return this.postings;
+  getAllPostings(): Promise<Posting[]> {
+    return this.postingsRepository.find();
   }
 
-  createPosting(posting: CreatePostingDto) {
-    const newPosting = {
-      id: ++this.lastPostingId,
-      ...posting,
-    };
+  async createPosting(posting: CreatePostingDto): Promise<Posting> {
+    const newPosting = this.postingsRepository.create(posting);
+    await this.postingsRepository.save(newPosting);
 
-    this.postings.push(newPosting);
     return newPosting;
   }
 }

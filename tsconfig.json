@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "commonjs",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -19,6 +19,8 @@
     "baseUrl": "./",
     "alwaysStrict": true,
     "noImplicitAny": true,
-    "types": ["node"]
+    "types": ["node"],
+    "jsx": "react",
+    "noEmit": true
   }
 }
