@@ -10,14 +10,14 @@ export default class PostingsService {
     @InjectRepository(Posting) private postingsRepository: Repository<Posting>,
   ) {}
 
-  findAll() {
+  findAll(): Promise<Posting[]> {
     return this.postingsRepository.find();
   }
 
-  async create(createPostingDto: CreatePostingDto) {
-    const newPosting = this.postingsRepository.create(createPostingDto);
-    await this.postingsRepository.save(newPosting);
+  async create(createPostingDto: CreatePostingDto): Promise<Posting> {
+    const createdPosting = this.postingsRepository.create(createPostingDto);
+    await this.postingsRepository.save(createdPosting);
 
-    return newPosting;
+    return createdPosting;
   }
 }
