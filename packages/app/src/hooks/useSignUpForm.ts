@@ -1,7 +1,10 @@
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import authService from "../services/authService";
+import { Me } from "../types";
+import { signUp } from "../reducers/authReducer";
 
-interface SignUpFormFields {
+export interface SignUpFormFields {
   firstName: string;
   lastName: string;
   email: string;
@@ -9,7 +12,14 @@ interface SignUpFormFields {
   passwordConfirm: string;
 }
 
-export default function useSignUpForm() {
+interface UseSignUpForm {
+  initialValues: SignUpFormFields;
+  validationSchema: Yup.ObjectSchema;
+  handleSubmit: (input: SignUpFormFields) => void;
+}
+
+export default function useSignUpForm(): UseSignUpForm {
+  const dispatch = useDispatch();
   const initialValues: SignUpFormFields = {
     firstName: "",
     lastName: "",
@@ -17,10 +27,6 @@ export default function useSignUpForm() {
     password: "",
     passwordConfirm: "",
   };
-
-  const lowercaseRegex = /(?=.*[a-z])/;
-  const uppercaseRegex = /(?=.*[A-Z])/;
-  const numericRegex = /(?=.*[0-9])/;
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().min(2).max(20),
@@ -38,12 +44,8 @@ export default function useSignUpForm() {
     //   .required(),
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function handleSubmit({ passwordConfirm, ...data }: SignUpFormFields) {
-    const { data: user } = await axios.post(
-      "http://localhost:4000/auth/sign-up",
-      data,
-    );
+  function handleSubmit(input: SignUpFormFields) {
+    dispatch(signUp(input));
   }
 
   return { initialValues, validationSchema, handleSubmit };

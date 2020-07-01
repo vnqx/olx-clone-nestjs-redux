@@ -1,10 +1,10 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
-import meReducer from "./reducers/meReducer";
+import authReducer from "./reducers/authReducer";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const rootReducer = combineReducers({
-  me: meReducer,
+  me: authReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

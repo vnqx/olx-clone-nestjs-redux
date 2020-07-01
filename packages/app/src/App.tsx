@@ -3,22 +3,15 @@ import { Routes, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Header from "./Header";
-import { useDispatch, useSelector } from "react-redux";
-import { initializeMe } from "./reducers/meReducer";
-import { RootState } from "./store";
+import { useDispatch } from "react-redux";
+import { initMe } from "./reducers/authReducer";
 
 export default function App(): React.ReactElement {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initializeMe());
+    dispatch(initMe());
   }, [dispatch]);
-
-  const me = useSelector((state: RootState) => {
-    return state.me;
-  });
-
-  console.log(me);
 
   return (
     <>

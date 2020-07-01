@@ -1,14 +1,12 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import Axios from "axios";
+import { signOut } from "../../reducers/authReducer";
+import { useDispatch } from "react-redux";
 
 export default function SignOutButton(): React.ReactElement {
+  const dispatch = useDispatch();
   async function handleClick() {
-    const { data } = await Axios.post(
-      "http://localhost:4000/auth/sign-out",
-      {},
-      { withCredentials: true },
-    );
+    dispatch(signOut());
   }
 
   return (

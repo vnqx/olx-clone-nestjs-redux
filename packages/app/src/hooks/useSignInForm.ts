@@ -1,8 +1,8 @@
-import { useSetRecoilState } from "recoil";
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { signIn } from "../reducers/authReducer";
 
-interface SignInFormFields {
+export interface SignInFormFields {
   email: string;
   password: string;
 }
@@ -10,10 +10,11 @@ interface SignInFormFields {
 interface UseSignInForm {
   initialValues: SignInFormFields;
   validationSchema: Yup.ObjectSchema;
-  handleSubmit: (data: SignInFormFields) => Promise<void>;
+  handleSubmit: (input: SignInFormFields) => void;
 }
 
 export default function useSignInForm(): UseSignInForm {
+  const dispatch = useDispatch();
   const initialValues: SignInFormFields = {
     email: "",
     password: "",
@@ -30,14 +31,8 @@ export default function useSignInForm(): UseSignInForm {
     // .required(),
   });
 
-  async function handleSubmit(data: SignInFormFields) {
-    const { data: user } = await axios.post(
-      "http://localhost:4000/auth/sign-in",
-      data,
-      {
-        withCredentials: true,
-      },
-    );
+  async function handleSubmit(input: SignInFormFields) {
+    dispatch(signIn(input));
   }
 
   return { initialValues, validationSchema, handleSubmit };
