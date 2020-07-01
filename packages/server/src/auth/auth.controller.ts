@@ -21,8 +21,14 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post("sign-up")
-  async signUp(@Body() signUpDto: SignUpDto): Promise<PublicUser> {
-    return this.authService.signUp(signUpDto);
+  async signUp(
+    @Body() signUpDto: SignUpDto,
+    @Res() res: Response,
+  ): Promise<Response<PublicUser>> {
+    const user = await this.authService.signUp(signUpDto);
+    const cookie = this.authService.getCookieWithJwtToken(user.id);
+    res.setHeader("Set-Cookie", cookie);
+    return res.send(user);
   }
 
   @HttpCode(200)
@@ -47,7 +53,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  authenticate(@Req() req: ReqWithUser): PublicUser {
+  getMe(@Req() req: ReqWithUser): PublicUser {
     const { user } = req;
     delete user.passwordHash;
 
