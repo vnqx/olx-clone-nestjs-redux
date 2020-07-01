@@ -14,7 +14,6 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "incremental": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "alwaysStrict": true,

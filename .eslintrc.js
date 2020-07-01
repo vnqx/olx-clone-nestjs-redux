@@ -1,20 +1,28 @@
 module.exports = {
+  root: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: "module",
-    project: "tsconfig.json",
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
+  plugins: ["@typescript-eslint", "jest", "react-hooks", "react"],
   extends: [
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    // "prettier",
-    // "prettier/@typescript-eslint",
+    "plugin:jest/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:eslint-comments/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended",
   ],
-  rules: {},
-  // root: true,
   env: {
     node: true,
     jest: true,
+  },
+  rules: {
+    "eslint-comments/no-unused-disable": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
   },
 };

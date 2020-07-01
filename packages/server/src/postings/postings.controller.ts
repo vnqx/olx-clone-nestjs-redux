@@ -8,12 +8,12 @@ export default class PostingsController {
   constructor(private readonly postingsService: PostingsService) {}
 
   @Get()
-  getAllPostings(): Promise<Posting[]> {
-    return this.postingsService.getAllPostings();
+  findAll(): Promise<Posting[]> {
+    return this.postingsService.findAll();
   }
 
   @Post()
-  async createPosting(@Body() posting: CreatePostingDto): Promise<Posting> {
-    return this.postingsService.createPosting(posting);
+  async create(@Body() createPostingDto: CreatePostingDto): Promise<Posting> {
+    return this.postingsService.create(createPostingDto);
   }
 }
