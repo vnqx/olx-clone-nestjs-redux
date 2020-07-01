@@ -1,19 +1,24 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import axios from "axios";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Header from "./Header";
+import { useDispatch, useSelector } from "react-redux";
+import { initializeMe } from "./reducers/meReducer";
+import { RootState } from "./store";
 
 export default function App(): React.ReactElement {
-  useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get("http://localhost:4000/postings");
-      console.log(response.data);
-    }
+  const dispatch = useDispatch();
 
-    fetchData();
+  useEffect(() => {
+    dispatch(initializeMe());
+  }, [dispatch]);
+
+  const me = useSelector((state: RootState) => {
+    return state.me;
   });
+
+  console.log(me);
 
   return (
     <>

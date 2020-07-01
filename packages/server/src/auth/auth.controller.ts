@@ -31,17 +31,16 @@ export class AuthController {
   async signIn(
     @Req() req: ReqWithUser,
     @Res() res: Response,
-  ): Promise<PublicUser> {
+  ): Promise<Response<PublicUser>> {
     const { user } = req;
     const cookie = this.authService.getCookieWithJwtToken(user.id);
     res.setHeader("Set-Cookie", cookie);
-    delete user.passwordHash;
-    return user;
+    return res.send(user);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post("sign-out")
-  signOut(@Req() req: ReqWithUser, @Res() res: Response): Response {
+  signOut(@Res() res: Response): Response {
     res.setHeader("Set-Cookie", this.authService.getCookieForSignOut());
     return res.sendStatus(200);
   }
@@ -51,6 +50,7 @@ export class AuthController {
   authenticate(@Req() req: ReqWithUser): PublicUser {
     const { user } = req;
     delete user.passwordHash;
+
     return user;
   }
 }
