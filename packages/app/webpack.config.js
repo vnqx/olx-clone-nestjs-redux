@@ -6,9 +6,14 @@ module.exports = {
   entry: "./src/index.tsx",
   target: "web",
   mode: "development",
+  devServer: {
+    port: 3000,
+    historyApiFallback: true,
+  },
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.js",
+    publicPath: "/",
   },
   resolve: {
     extensions: [".ts", ".tsx", ".json", ".js", ".jsx"],
