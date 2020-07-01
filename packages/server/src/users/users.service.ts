@@ -11,19 +11,27 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const newUser = this.usersRepository.create(createUserDto);
-    await this.usersRepository.save(newUser);
+    const createdUser = this.usersRepository.create(createUserDto);
+    await this.usersRepository.save(createdUser);
 
-    return newUser;
+    return createdUser;
   }
 
   async findByEmail(email: string): Promise<User> {
     const user = await this.usersRepository.findOne({ email });
-    if (user) return user;
+    if (!user)
+      throw new HttpException(
+        "User with this email doesn't exist",
+        HttpStatus.NOT_FOUND,
+      );
 
-    throw new HttpException(
-      "User with this email doesn't exist",
-      HttpStatus.NOT_FOUND,
-    );
+    return user;
+  }
+
+  async findById(userId: number): Promise<User> {
+    const user = await this.usersRepository.findOne(userId);
+    if (!user) throw new HttpException("User not found", HttpStatus.NOT_FOUND);
+
+    return user;
   }
 }

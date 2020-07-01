@@ -1,13 +1,22 @@
+import { Response } from "express";
+import { ReqWithUser } from "./../interfaces";
+import { ConfigService } from "@nestjs/config";
 import { PublicUser } from "./../types";
 import { UsersService } from "./../users/users.service";
 import { SignUpDto } from "./dto/signUp.dto";
 import bcrypt from "bcrypt";
-import { HttpException, HttpStatus } from "@nestjs/common";
+import { HttpException, HttpStatus, Req, Res } from "@nestjs/common";
 import { PostgresErrorCode } from "../enums";
 import { SignInDto } from "./dto/signIn.dto";
+import { Token } from "../interfaces";
+import { JwtService } from "@nestjs/jwt";
 
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async signUp(signUpDto: SignUpDto): Promise<PublicUser> {
     const { password, ...userData } = signUpDto;
@@ -50,5 +59,17 @@ export class AuthService {
     const isPasswordValid = await bcrypt.compare(password, passwordHash);
     if (!isPasswordValid)
       throw new HttpException("Wrong credentials", HttpStatus.BAD_REQUEST);
+  }
+
+  getCookieWithJwtToken(userId: number): string {
+    const payload: Token = { userId };
+    const token = this.jwtService.sign(payload);
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+      "JWT_EXPIRES_IN",
+    )}`;
+  }
+
+  getCookieForSignOut(): string {
+    return "Authentication=; HttpOnly; Path=/; Max-Age=0";
   }
 }
