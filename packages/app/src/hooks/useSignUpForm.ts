@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as Yup from "yup";
 
 interface SignUpFormFields {
@@ -37,8 +38,14 @@ export default function useSignUpForm() {
     //   .required(),
   });
 
-  function handleSubmit() {
-    console.log("ddd");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async function handleSubmit({ passwordConfirm, ...data }: SignUpFormFields) {
+    const response = await axios.post(
+      "http://localhost:4000/auth/sign-up",
+      data,
+    );
+
+    console.log(response.data);
   }
 
   return { initialValues, validationSchema, handleSubmit };

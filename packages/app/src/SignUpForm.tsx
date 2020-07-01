@@ -26,31 +26,26 @@ export default function SignUpForm(): React.ReactElement {
             name="firstName"
             type="text"
             label="First name"
-            component={TextField}
+            placeholder="First name"
           />
           <Field
             name="lastName"
             type="text"
             label="Last name"
-            component={TextField}
+            placeholder="Last name"
           />
-          <Field
-            name="email"
-            type="email"
-            label="Email"
-            component={TextField}
-          />
+          <Field name="email" type="email" label="Email" placeholder="Email" />
           <Field
             name="password"
             type="password"
             label="Password"
-            component={TextField}
+            placeholder="Password"
           />
           <Field
             name="passwordConfirm"
             type="password"
             label="Confirm password"
-            component={TextField}
+            placeholder="Confirm password"
           />
           <Button
             type="submit"

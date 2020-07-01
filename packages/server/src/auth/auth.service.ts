@@ -1,16 +1,15 @@
-import { Response } from "express";
-import { ReqWithUser } from "./../interfaces";
 import { ConfigService } from "@nestjs/config";
 import { PublicUser } from "./../types";
-import { UsersService } from "./../users/users.service";
 import { SignUpDto } from "./dto/signUp.dto";
 import bcrypt from "bcrypt";
-import { HttpException, HttpStatus, Req, Res } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PostgresErrorCode } from "../enums";
 import { SignInDto } from "./dto/signIn.dto";
 import { Token } from "../interfaces";
 import { JwtService } from "@nestjs/jwt";
+import { UsersService } from "../users/users.service";
 
+@Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
@@ -46,7 +45,7 @@ export class AuthService {
 
   async signIn(signInDto: SignInDto): Promise<PublicUser> {
     try {
-      const user = await this.usersService.findByEmail(signInDto.email);
+      const user = await this.usersService.getByEmail(signInDto.email);
       await this.verifyPassword(signInDto.password, user.passwordHash);
       delete user.passwordHash;
       return user;

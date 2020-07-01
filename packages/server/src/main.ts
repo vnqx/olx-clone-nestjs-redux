@@ -5,8 +5,8 @@ import cors from "cors";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cookieParser());
   app.use(cors());
+  app.use(cookieParser());
   await app.listen(4000);
 }
 

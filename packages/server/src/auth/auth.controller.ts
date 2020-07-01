@@ -50,7 +50,6 @@ export class AuthController {
   @Get()
   authenticate(@Req() req: ReqWithUser): PublicUser {
     const { user } = req;
-    console.log(user);
     delete user.passwordHash;
     return user;
   }

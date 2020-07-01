@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
-class Posting {
+export default class Posting {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -11,5 +11,3 @@ class Posting {
   @Column()
   price!: number;
 }
-
-export default Posting;

@@ -3,14 +3,11 @@ import { AuthModule } from "./auth/auth.module";
 import { PostingsModule } from "./postings/postings.module";
 import { DatabaseModule } from "./database.module";
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import Joi from "@hapi/joi";
 
 @Module({
   imports: [
-    PostingsModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -23,11 +20,12 @@ import Joi from "@hapi/joi";
         JWT_EXPIRES_IN: Joi.string().required(),
       }),
     }),
+    PostingsModule,
     DatabaseModule,
     AuthModule,
     UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

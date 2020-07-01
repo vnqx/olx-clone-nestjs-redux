@@ -12,12 +12,13 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = this.usersRepository.create(createUserDto);
+
     await this.usersRepository.save(createdUser);
 
     return createdUser;
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async getByEmail(email: string): Promise<User> {
     const user = await this.usersRepository.findOne({ email });
     if (!user)
       throw new HttpException(
@@ -28,7 +29,7 @@ export class UsersService {
     return user;
   }
 
-  async findById(userId: number): Promise<User> {
+  async getById(userId: number): Promise<User> {
     const user = await this.usersRepository.findOne(userId);
     if (!user) throw new HttpException("User not found", HttpStatus.NOT_FOUND);
 
