@@ -20,8 +20,8 @@ export default function App(): React.ReactElement {
       <Header />
       <Routes>
         <Route path="/" element={<div>qweqwe</div>} />
-        <Route path="sign-up" element={<SignIn />} />
-        <Route path="sign-in" element={<SignUp />} />
+        <Route path="sign-in" element={<SignIn />} />
+        <Route path="sign-up" element={<SignUp />} />
       </Routes>
     </>
   );
