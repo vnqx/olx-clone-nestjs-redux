@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import Header from "./Header";
 
 export default function App(): React.ReactElement {

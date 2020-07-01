@@ -1,8 +1,8 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
-import { Button, makeStyles, Grid, TextField } from "@material-ui/core";
+import { Button, makeStyles, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import useSignUpForm from "./hooks/useSignUpForm";
+import useSignInForm from "../../hooks/useSignInForm";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -10,9 +10,9 @@ const useStyles = makeStyles(() => ({
   submit: {},
 }));
 
-export default function SignUpForm(): React.ReactElement {
+export default function SignInForm(): React.ReactElement {
   const classes = useStyles();
-  const { initialValues, handleSubmit, validationSchema } = useSignUpForm();
+  const { initialValues, handleSubmit, validationSchema } = useSignInForm();
 
   return (
     <Formik
@@ -22,30 +22,12 @@ export default function SignUpForm(): React.ReactElement {
     >
       {({ isSubmitting }) => (
         <Form noValidate className={classes.form}>
-          <Field
-            name="firstName"
-            type="text"
-            label="First name"
-            placeholder="First name"
-          />
-          <Field
-            name="lastName"
-            type="text"
-            label="Last name"
-            placeholder="Last name"
-          />
           <Field name="email" type="email" label="Email" placeholder="Email" />
           <Field
             name="password"
             type="password"
             label="Password"
             placeholder="Password"
-          />
-          <Field
-            name="passwordConfirm"
-            type="password"
-            label="Confirm password"
-            placeholder="Confirm password"
           />
           <Button
             type="submit"
@@ -55,11 +37,11 @@ export default function SignUpForm(): React.ReactElement {
             className={classes.submit}
             disabled={isSubmitting}
           >
-            Sign Up
+            Sign In
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/sign-in">Already have an account? Sign in</Link>
+              <Link to="/sign-up">Don&apos;t have an account? Sign up</Link>
             </Grid>
           </Grid>
         </Form>

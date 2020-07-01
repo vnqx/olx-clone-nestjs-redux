@@ -40,12 +40,10 @@ export default function useSignUpForm() {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function handleSubmit({ passwordConfirm, ...data }: SignUpFormFields) {
-    const response = await axios.post(
+    const { data: user } = await axios.post(
       "http://localhost:4000/auth/sign-up",
       data,
     );
-
-    console.log(response.data);
   }
 
   return { initialValues, validationSchema, handleSubmit };
