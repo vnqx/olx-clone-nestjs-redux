@@ -46,6 +46,7 @@ export default function useSignUpForm(): UseSignUpForm {
 
   function handleSubmit(input: SignUpFormFields) {
     dispatch(signUp(input));
+    return true;
   }
 
   return { initialValues, validationSchema, handleSubmit };

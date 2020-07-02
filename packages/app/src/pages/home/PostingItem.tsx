@@ -43,7 +43,7 @@ export default function PostingItem({ posting }: Props): React.ReactElement {
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card className={classes.card}>
-        <Link to="/">
+        <Link to={`/postings/${posting.id}`}>
           <CardMedia
             className={classes.media}
             image={posting.photos[0] || "https://i.stack.imgur.com/y9DpT.jpg"}

@@ -31,8 +31,9 @@ export default function useSignInForm(): UseSignInForm {
     // .required(),
   });
 
-  async function handleSubmit(input: SignInFormFields) {
+  function handleSubmit(input: SignInFormFields) {
     dispatch(signIn(input));
+    return true;
   }
 
   return { initialValues, validationSchema, handleSubmit };

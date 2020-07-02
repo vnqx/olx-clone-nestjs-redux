@@ -20,7 +20,7 @@ export interface CreatePostingAction {
   payload: Posting;
 }
 
-export type PostingsAction = InitPostingsAction;
+export type PostingsAction = InitPostingsAction | CreatePostingAction;
 
 export const initialState: PostingsState = [];
 
@@ -31,6 +31,8 @@ function postingsReducer(
   switch (action.type) {
     case PostingsActionType.INIT_POSTINGS:
       return action.payload;
+    case PostingsActionType.CREATE_POSTING:
+      return state.concat(action.payload);
     default:
       return state;
   }
@@ -46,13 +48,20 @@ export function initPostings() {
   };
 }
 
-export function createPosting(input: CreatePostingFormFields) {
+export function createPosting(
+  input: CreatePostingFormFields,
+  // navigate: NavigateFunction,
+  // seems like NavigateFunction is not exported
+  navigate: (text: string) => void,
+) {
   return async (dispatch: Dispatch): Promise<void> => {
     const posting = await postingsService.create(input);
     dispatch({
       type: PostingsActionType.CREATE_POSTING,
       payload: posting,
     });
+
+    navigate(`/postings/${posting.id}`);
   };
 }
 

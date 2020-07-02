@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { createPosting } from "../reducers/postingsReducer";
+import { useNavigate } from "react-router-dom";
 
 export interface CreatePostingFormFields {
   title: string;
@@ -19,6 +20,7 @@ interface UseCreatePosting {
 
 export default function useCreatePosting(): UseCreatePosting {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const initialValues: CreatePostingFormFields = {
     title: "",
     price: "",
@@ -61,8 +63,9 @@ export default function useCreatePosting(): UseCreatePosting {
     //   .required(requiredMessage),
   });
 
-  function handleSubmit(input: CreatePostingFormFields) {
-    dispatch(createPosting(input));
+  async function handleSubmit(input: CreatePostingFormFields) {
+    // navigate to change the route to the created posting
+    dispatch(createPosting(input, navigate));
   }
 
   return { initialValues, validationSchema, handleSubmit };

@@ -16,4 +16,24 @@ export async function create(input: CreatePostingFormFields): Promise<Posting> {
   return posting;
 }
 
-export default { getAll, create };
+export async function uploadPhotos(photos: FileList): Promise<any> {
+  const formData = new FormData();
+  Array.from(photos).forEach((photo) => {
+    formData.append(`photos`, photo);
+  });
+
+  const { data: uploadedPhotos } = await Axios.post(
+    `${baseUrl}/upload`,
+    formData,
+    {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
+
+  return uploadedPhotos;
+}
+
+export default { getAll, create, uploadPhotos };

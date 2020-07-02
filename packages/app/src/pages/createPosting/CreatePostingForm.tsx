@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import useCreatePosting from "../../hooks/useCreatePosting";
 import MyTextField from "../../components/MyTextField";
+import MyUploadField from "../../components/MyUploadField";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,6 +61,7 @@ export default function CreatePostingForm(): React.ReactElement {
           />
           <MyTextField name="phone" type="tel" label="Phone" />
           <MyTextField name="city" type="text" label="City" />
+          <MyUploadField name="photos" />
           <Button
             color="primary"
             size="large"
