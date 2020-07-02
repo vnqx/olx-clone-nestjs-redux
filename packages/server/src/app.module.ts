@@ -4,6 +4,7 @@ import { PostingsModule } from "./postings/postings.module";
 import { DatabaseModule } from "./database.module";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { UploadModule } from './upload/upload.module';
 import Joi from "@hapi/joi";
 
 @Module({
@@ -27,6 +28,7 @@ import Joi from "@hapi/joi";
     DatabaseModule,
     AuthModule,
     UsersModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [],
