@@ -48,13 +48,13 @@ export const initialState: AuthState = {
 function authReducer(state = initialState, action: AuthAction): AuthState {
   switch (action.type) {
     case AuthActionType.INIT_ME:
-      return { me: action.payload };
+      return { ...state, me: action.payload };
     case AuthActionType.SIGN_IN:
-      return { me: action.payload };
+      return { ...state, me: action.payload };
     case AuthActionType.SIGN_UP:
-      return { me: action.payload };
+      return { ...state, me: action.payload };
     case AuthActionType.SIGN_OUT:
-      return { me: action.payload };
+      return { ...state, me: action.payload };
     default:
       return state;
   }
@@ -72,10 +72,7 @@ export function initMe() {
 
 export function signIn(input: SignInFormFields) {
   return async (dispatch: Dispatch): Promise<void> => {
-    console.log(input, "hihhi");
-
     const me = await authService.signIn(input);
-    console.log(me);
 
     dispatch({
       type: AuthActionType.SIGN_IN,

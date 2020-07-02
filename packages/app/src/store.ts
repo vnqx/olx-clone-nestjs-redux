@@ -3,10 +3,12 @@ import authReducer from "./reducers/authReducer";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import postingsReducer from "./reducers/postingsReducer";
+import photosReducer from "./reducers/photosReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   postings: postingsReducer,
+  photos: photosReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

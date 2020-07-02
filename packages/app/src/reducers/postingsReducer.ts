@@ -41,6 +41,8 @@ function postingsReducer(
 export function initPostings() {
   return async (dispatch: Dispatch): Promise<void> => {
     const postings = await postingsService.getAll();
+    console.log(postings);
+
     dispatch({
       type: PostingsActionType.INIT_POSTINGS,
       payload: postings,

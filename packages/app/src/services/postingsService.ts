@@ -1,6 +1,7 @@
 import { CreatePostingFormFields } from "./../hooks/useCreatePosting";
 import Axios from "axios";
 import { Posting } from "../types";
+
 const baseUrl = "http://localhost:4000/postings";
 
 export async function getAll(): Promise<Posting[]> {
@@ -16,24 +17,4 @@ export async function create(input: CreatePostingFormFields): Promise<Posting> {
   return posting;
 }
 
-export async function uploadPhotos(photos: FileList): Promise<any> {
-  const formData = new FormData();
-  Array.from(photos).forEach((photo) => {
-    formData.append(`photos`, photo);
-  });
-
-  const { data: uploadedPhotos } = await Axios.post(
-    `${baseUrl}/upload`,
-    formData,
-    {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    },
-  );
-
-  return uploadedPhotos;
-}
-
-export default { getAll, create, uploadPhotos };
+export default { getAll, create };
