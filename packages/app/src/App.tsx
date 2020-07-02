@@ -5,6 +5,9 @@ import SignUp from "./pages/SignUp";
 import Header from "./Header";
 import { useDispatch } from "react-redux";
 import { initMe } from "./reducers/authReducer";
+import FullPosting from "./pages/FullPosting";
+import Home from "./pages/Home";
+import CreatePosting from "./pages/CreatePosting";
 
 export default function App(): React.ReactElement {
   const dispatch = useDispatch();
@@ -17,9 +20,13 @@ export default function App(): React.ReactElement {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<div>qweqwe</div>} />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="sign-up" element={<SignUp />} />
+        <Route path="/" element={<Home />} />
+        <Route path="auth">
+          <Route path="sign-in" element={<SignIn />} />
+          <Route path="sign-up" element={<SignUp />} />
+        </Route>
+        <Route path="postings/create" element={<CreatePosting />} />
+        <Route path="postings/:id" element={<FullPosting />} />
       </Routes>
     </>
   );

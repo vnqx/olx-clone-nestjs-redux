@@ -1,25 +1,60 @@
-import { AuthAction } from "./../types";
 import { SignUpFormFields } from "./../hooks/useSignUpForm";
 import { SignInFormFields } from "./../hooks/useSignInForm";
 import { Me } from "../types";
 import authService from "../services/authService";
 import { Dispatch } from "redux";
-import { AuthActionType } from "../enums";
 
-export type MeState = Me | null;
+export enum AuthActionType {
+  INIT_ME = "INIT_ME",
+  SIGN_IN = "SIGN_IN",
+  SIGN_UP = "SIGN_UP",
+  SIGN_OUT = "SIGN_OUT",
+}
 
-const initialState: MeState = null;
+export interface InitMeAction {
+  type: typeof AuthActionType.INIT_ME;
+  payload: Me;
+}
 
-function authReducer(state = initialState, action: AuthAction): MeState {
+export interface SignInAction {
+  type: typeof AuthActionType.SIGN_IN;
+  payload: Me;
+}
+
+export interface SignUpAction {
+  type: typeof AuthActionType.SIGN_UP;
+  payload: Me;
+}
+
+export interface SignOutAction {
+  type: typeof AuthActionType.SIGN_OUT;
+  payload: Me;
+}
+
+export type AuthAction =
+  | InitMeAction
+  | SignInAction
+  | SignUpAction
+  | SignOutAction;
+
+export interface AuthState {
+  me: Me | null;
+}
+
+export const initialState: AuthState = {
+  me: null,
+};
+
+function authReducer(state = initialState, action: AuthAction): AuthState {
   switch (action.type) {
     case AuthActionType.INIT_ME:
-      return action.payload;
+      return { me: action.payload };
     case AuthActionType.SIGN_IN:
-      return action.payload;
+      return { me: action.payload };
     case AuthActionType.SIGN_UP:
-      return action.payload;
+      return { me: action.payload };
     case AuthActionType.SIGN_OUT:
-      return action.payload;
+      return { me: action.payload };
     default:
       return state;
   }
@@ -28,8 +63,6 @@ function authReducer(state = initialState, action: AuthAction): MeState {
 export function initMe() {
   return async (dispatch: Dispatch): Promise<void> => {
     const me = await authService.getMe();
-    console.log(me);
-
     dispatch({
       type: AuthActionType.INIT_ME,
       payload: me,
