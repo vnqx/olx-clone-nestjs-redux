@@ -1,14 +1,26 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
-import { Button, makeStyles, Grid } from "@material-ui/core";
+import {
+  Button,
+  makeStyles,
+  Grid,
+  createStyles,
+  Theme,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import useSignInForm from "../../hooks/useSignInForm";
 
-const useStyles = makeStyles(() => ({
-  root: {},
-  form: {},
-  submit: {},
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    form: {
+      width: "100%", // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }),
+);
 
 export default function SignInForm(): React.ReactElement {
   const classes = useStyles();
