@@ -10,4 +10,10 @@ export default class Posting {
 
   @Column()
   price!: number;
+
+  @Column()
+  mainImage!: string;
+
+  @Column("text", { array: true })
+  otherImages!: string[];
 }

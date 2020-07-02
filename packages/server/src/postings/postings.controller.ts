@@ -13,7 +13,7 @@ export default class PostingsController {
     return this.postingsService.findAll();
   }
 
-  @Post()
+  @Post("create")
   @UseGuards(JwtAuthGuard)
   async create(@Body() createPostingDto: CreatePostingDto): Promise<Posting> {
     return this.postingsService.create(createPostingDto);
