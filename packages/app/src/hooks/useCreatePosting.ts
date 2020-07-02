@@ -1,11 +1,14 @@
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { createPosting } from "../reducers/postingsReducer";
 
 export interface CreatePostingFormFields {
   title: string;
   price: string;
-  mainImage: string;
-  otherImages: string[];
+  description: string;
+  phone: string;
+  city: string;
+  photos: string[];
 }
 
 interface UseCreatePosting {
@@ -15,16 +18,18 @@ interface UseCreatePosting {
 }
 
 export default function useCreatePosting(): UseCreatePosting {
+  const dispatch = useDispatch();
   const initialValues: CreatePostingFormFields = {
     title: "",
     price: "",
-    mainImage: "",
-    otherImages: [],
+    description: "",
+    phone: "",
+    city: "",
+    photos: [],
   };
 
   const validationSchema = Yup.object().shape({
-    // title: Yup.string()
-    //   .min(2, minMessage(2))
+    title: Yup.string().min(4),
     //   .max(15, maxMessage(15))
     //   .required(requiredMessage),
     // category: Yup.string()
@@ -57,7 +62,7 @@ export default function useCreatePosting(): UseCreatePosting {
   });
 
   function handleSubmit(input: CreatePostingFormFields) {
-    createPosting(input);
+    dispatch(createPosting(input));
   }
 
   return { initialValues, validationSchema, handleSubmit };

@@ -1,4 +1,7 @@
 export class CreatePostingDto {
-  price!: number;
   title!: string;
+  price!: number;
+  description!: string;
+  phone!: number;
+  city!: string;
 }

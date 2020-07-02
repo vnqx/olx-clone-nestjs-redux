@@ -12,8 +12,17 @@ export default class Posting {
   price!: number;
 
   @Column()
-  mainImage!: string;
+  description!: string;
 
-  @Column("text", { array: true })
-  otherImages!: string[];
+  @Column()
+  phone!: number;
+
+  @Column()
+  city!: string;
+
+  @Column({
+    array: true,
+    type: "text",
+  })
+  photos!: string[];
 }

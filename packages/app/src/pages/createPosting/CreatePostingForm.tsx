@@ -1,7 +1,14 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Button, makeStyles, createStyles, Theme } from "@material-ui/core";
+import {
+  Button,
+  makeStyles,
+  createStyles,
+  Theme,
+  InputAdornment,
+} from "@material-ui/core";
 import useCreatePosting from "../../hooks/useCreatePosting";
+import MyTextField from "../../components/MyTextField";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,20 +40,7 @@ export default function CreatePostingForm(): React.ReactElement {
     >
       {({ isSubmitting }) => (
         <Form noValidate className={classes.form}>
-          {/* <MyTextField name="title" type="title" label="Title" autoFocus />
-          <MySelect
-            name="category"
-            type="text"
-            label="Category"
-            selectValues={CATEGORIES}
-          />
-          <MyTextField
-            name="description"
-            type="text"
-            label="Description"
-            multiline
-            rows={5}
-          />
+          <MyTextField name="title" type="text" label="Title" autoFocus />
           <MyTextField
             name="price"
             type="number"
@@ -57,15 +51,15 @@ export default function CreatePostingForm(): React.ReactElement {
               ),
             }}
           />
-          <MySelect
-            name="condition"
+          <MyTextField
+            name="description"
             type="text"
-            label="Condition"
-            selectValues={CONDITIONS}
+            label="Description"
+            multiline
+            rows={5}
           />
           <MyTextField name="phone" type="tel" label="Phone" />
           <MyTextField name="city" type="text" label="City" />
-          <MyUploadField name="urls" /> */}
           <Button
             color="primary"
             size="large"

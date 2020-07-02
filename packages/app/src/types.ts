@@ -2,8 +2,10 @@ export interface Posting {
   id: number;
   title: string;
   price: number;
-  mainImage: string;
-  otherPhotos: string[];
+  description: string;
+  phone: number;
+  city: string;
+  photos: string[];
 }
 
 export interface Me {
