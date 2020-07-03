@@ -41,6 +41,28 @@ export default class PostingsService {
     return createdPosting;
   }
 
+  async delete(postingId: string, user: User): Promise<boolean> {
+    const posting = await this.postingsRepository.findOne(postingId, {
+      relations: ["user"],
+    });
+
+    if (!posting)
+      throw new HttpException(
+        "Posting with this id doesn't exist",
+        HttpStatus.NOT_FOUND,
+      );
+
+    if (posting.user.id !== user.id)
+      throw new HttpException(
+        "You can delete your own postings only",
+        HttpStatus.FORBIDDEN,
+      );
+
+    await this.postingsRepository.remove(posting);
+
+    return true;
+  }
+
   // if just followed return true if just unfollowed return false
   async followPosting(id: string, user: User): Promise<FollowPosting> {
     const posting = await this.postingsRepository.findOne(id, {

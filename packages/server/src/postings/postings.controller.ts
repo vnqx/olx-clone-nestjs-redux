@@ -9,6 +9,7 @@ import {
   Param,
   Patch,
   Req,
+  Delete,
 } from "@nestjs/common";
 import Posting from "./posting.entity";
 import PostingsService from "./postings.service";
@@ -39,10 +40,18 @@ export default class PostingsController {
 
   @Post("create")
   @UseGuards(JwtAuthGuard)
-  async create(
+  create(
     @Body() createPostingDto: CreatePostingDto,
     @Req() req: ReqWithUser,
   ): Promise<Posting> {
     return this.postingsService.create(createPostingDto, req.user);
+  }
+
+  @Delete(":id")
+  @UseGuards(JwtAuthGuard)
+  delete(@Param("id") id: string, @Req() req: ReqWithUser): Promise<boolean> {
+    console.log("hi");
+
+    return this.postingsService.delete(id, req.user);
   }
 }
