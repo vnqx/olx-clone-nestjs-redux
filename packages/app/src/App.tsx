@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 import CreatePosting from "./pages/CreatePosting";
 import { loadFollowedPostings } from "./reducers/followedPostingsReducer";
 import { RootState } from "./store";
+import Footer from "./components/Footer";
+import Followed from "./pages/Followed";
 
 export default function App(): React.ReactElement {
   const dispatch = useDispatch();
@@ -34,7 +36,11 @@ export default function App(): React.ReactElement {
         </Route>
         <Route path="postings/create" element={<CreatePosting />} />
         <Route path="postings/:id" element={<FullPosting />} />
+        <Route path="account">
+          <Route path="followed" element={<Followed />} />
+        </Route>
       </Routes>
+      <Footer />
     </>
   );
 }

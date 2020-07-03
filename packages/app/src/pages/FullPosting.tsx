@@ -16,6 +16,7 @@ import {
 import { RootState } from "../store";
 import { loadFullPosting } from "../reducers/fullPostingReducer";
 import FollowButton from "../components/FollowButton";
+import PhonePopover from "./fullPosting/PhonePopover";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -95,7 +96,8 @@ export default function FullPosting(): React.ReactElement {
         </CardContent>
         <CardActions disableSpacing className={classes.actions}>
           <div className={classes.iconActions}>
-            <FollowButton id={posting.id} /> phone
+            <FollowButton id={posting.id} />
+            <PhonePopover phone={posting.phone} />
           </div>
           <div>message dialog</div>
         </CardActions>

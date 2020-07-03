@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     icon: {
       color: "gold",
-      marginRight: theme.spacing(1),
+      margin: theme.spacing(0, 1),
     },
   }),
 );
