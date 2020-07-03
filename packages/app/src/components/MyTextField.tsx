@@ -12,9 +12,9 @@ type Props = TextFieldProps & UseFieldProps;
 export default function MyTextField(props: Props): React.ReactElement {
   const { name, type } = props;
 
-  const [field, { error, touched }] = useField({ name, type });
+  const [field, { error: formikError, touched }] = useField({ name, type });
 
-  const isError = (error && touched) as boolean;
+  const error = touched && formikError;
 
   return (
     <TextField
@@ -23,8 +23,8 @@ export default function MyTextField(props: Props): React.ReactElement {
       margin="normal"
       {...field}
       {...props}
-      error={isError}
-      helperText={isError && error}
+      error={!!error}
+      helperText={error}
     />
   );
 }

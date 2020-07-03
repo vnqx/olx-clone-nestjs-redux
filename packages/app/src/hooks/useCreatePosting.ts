@@ -2,10 +2,12 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { createPosting } from "../reducers/fullPostingReducer";
+import { Condition } from "../enums";
 
 export interface CreatePostingFormFields {
   title: string;
   price: string;
+  condition: Condition;
   description: string;
   phone: string;
   city: string;
@@ -24,6 +26,7 @@ export default function useCreatePosting(): UseCreatePosting {
   const initialValues: CreatePostingFormFields = {
     title: "",
     price: "",
+    condition: Condition.New,
     description: "",
     phone: "",
     city: "",

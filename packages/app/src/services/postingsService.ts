@@ -51,10 +51,24 @@ async function getAllFollowedPostings(): Promise<FollowedPostingsData> {
   return postings;
 }
 
+interface MyPostingsData {
+  postings: Posting[];
+}
+
+async function getAllMyPostings(): Promise<MyPostingsData> {
+  const { data: postings } = await Axios.get<MyPostingsData>(
+    "http://localhost:4000/account/postings",
+    { withCredentials: true },
+  );
+
+  return postings;
+}
+
 export default {
   getAll,
   create,
   getById,
   followPosting,
   getAllFollowedPostings,
+  getAllMyPostings,
 };

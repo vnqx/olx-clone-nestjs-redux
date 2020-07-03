@@ -10,6 +10,7 @@ import {
 import useCreatePosting from "../../hooks/useCreatePosting";
 import MyTextField from "../../components/MyTextField";
 import UploadPhotosField from "./UploadPhotosField";
+import ConditionField from "./ConditionField";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,6 +53,7 @@ export default function CreatePostingForm(): React.ReactElement {
               ),
             }}
           />
+          <ConditionField />
           <MyTextField
             name="description"
             type="text"

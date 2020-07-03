@@ -12,6 +12,8 @@ import {
   CardContent,
   Typography,
   CardActions,
+  Button,
+  Chip,
 } from "@material-ui/core";
 import { RootState } from "../store";
 import { loadFullPosting } from "../reducers/fullPostingReducer";
@@ -56,6 +58,9 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: theme.spacing(1),
       },
     },
+    message: {
+      marginRight: theme.spacing(1),
+    },
   }),
 );
 
@@ -79,7 +84,10 @@ export default function FullPosting(): React.ReactElement {
       <Card>
         <div className={classes.header}>
           <CardHeader title={posting.title} subheader={`$${posting.price}`} />
-          <div className={classes.chips}>chip: condition, chip: category</div>
+          <div className={classes.chips}>
+            <Chip color="primary" label={posting.condition} />
+            <Chip label={posting.city} />
+          </div>
         </div>
         {posting.photos.map((url) => (
           <CardMedia
@@ -99,7 +107,11 @@ export default function FullPosting(): React.ReactElement {
             <FollowButton id={posting.id} />
             <PhonePopover phone={posting.phone} />
           </div>
-          <div>message dialog</div>
+          <div className={classes.message}>
+            <Button variant="outlined" color="primary">
+              Send message
+            </Button>
+          </div>
         </CardActions>
       </Card>
     </Container>

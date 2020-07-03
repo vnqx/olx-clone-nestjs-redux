@@ -63,7 +63,7 @@ export default function Header(): React.ReactElement {
             </>
           )}
 
-          <Link to="account">
+          <Link to="account/postings">
             <Avatar />
           </Link>
         </Toolbar>

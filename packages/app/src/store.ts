@@ -7,11 +7,13 @@ import photosReducer from "./reducers/photosReducer";
 import meReducer from "./reducers/meReducer";
 import fullPostingReducer from "./reducers/fullPostingReducer";
 import followedPostingsReducer from "./reducers/followedPostingsReducer";
+import myPostingsReducer from "./reducers/myPostingsReducer";
 
 const rootReducer = combineReducers({
   me: meReducer,
   postings: postingsReducer,
   followedPostings: followedPostingsReducer,
+  myPostings: myPostingsReducer,
   fullPosting: fullPostingReducer,
   photos: photosReducer,
 });
