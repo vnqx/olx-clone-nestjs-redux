@@ -6,5 +6,5 @@ export interface ReqWithUser extends Request {
 }
 
 export interface Token {
-  userId: number;
+  userId: string;
 }

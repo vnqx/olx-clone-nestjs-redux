@@ -60,7 +60,7 @@ export class AuthService {
       throw new HttpException("Wrong credentials", HttpStatus.BAD_REQUEST);
   }
 
-  getCookieWithJwtToken(userId: number): string {
+  getCookieWithJwtToken(userId: string): string {
     const payload: Token = { userId };
     const token = this.jwtService.sign(payload);
 

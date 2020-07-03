@@ -29,7 +29,7 @@ export class UsersService {
     return user;
   }
 
-  async getById(userId: number): Promise<User> {
+  async getById(userId: string): Promise<User> {
     const user = await this.usersRepository.findOne(userId);
     if (!user) throw new HttpException("User not found", HttpStatus.NOT_FOUND);
 

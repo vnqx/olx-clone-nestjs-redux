@@ -44,7 +44,6 @@ export class AuthController {
     return res.send(user);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post("sign-out")
   signOut(@Res() res: Response): Response {
     res.setHeader("Set-Cookie", this.authService.getCookieForSignOut());

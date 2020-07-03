@@ -2,8 +2,8 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export default class Posting {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
   @Column()
   title!: string;
@@ -25,4 +25,7 @@ export default class Posting {
     type: "text",
   })
   photos!: string[];
+
+  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
+  createdAt!: Date;
 }

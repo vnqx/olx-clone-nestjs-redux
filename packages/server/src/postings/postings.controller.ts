@@ -1,5 +1,5 @@
 import { CreatePostingDto } from "./dto/createPosting.dto";
-import { Controller, Get, Post, Body, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Body, UseGuards, Param } from "@nestjs/common";
 import Posting from "./posting.entity";
 import PostingsService from "./postings.service";
 import JwtAuthGuard from "../auth/jwtAuth.guard";
@@ -10,7 +10,12 @@ export default class PostingsController {
 
   @Get()
   getAll(): Promise<Posting[]> {
-    return this.postingsService.findAll();
+    return this.postingsService.getAll();
+  }
+
+  @Get(":id")
+  getById(@Param("id") id: string): Promise<Posting> {
+    return this.postingsService.getById(id);
   }
 
   @Post("create")
