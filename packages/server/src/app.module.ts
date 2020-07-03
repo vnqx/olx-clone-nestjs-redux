@@ -5,8 +5,7 @@ import { DatabaseModule } from "./database.module";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { UploadModule } from "./upload/upload.module";
-import { FollowController } from "./follow/follow.controller";
-import { FollowModule } from "./follow/follow.module";
+import { AccountModule } from "./account/account.module";
 import Joi from "@hapi/joi";
 
 @Module({
@@ -31,7 +30,7 @@ import Joi from "@hapi/joi";
     AuthModule,
     UsersModule,
     UploadModule,
-    FollowModule,
+    AccountModule,
   ],
   controllers: [],
   providers: [],

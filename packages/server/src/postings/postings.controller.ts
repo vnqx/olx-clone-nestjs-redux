@@ -1,4 +1,4 @@
-import { ReqWithUser } from "./../interfaces";
+import { ReqWithUser, FollowPosting } from "./../interfaces";
 import { CreatePostingDto } from "./dto/createPosting.dto";
 import {
   Controller,
@@ -26,6 +26,17 @@ export default class PostingsController {
   @Get(":id")
   getById(@Param("id") id: string): Promise<Posting> {
     return this.postingsService.getById(id);
+  }
+
+  @Patch(":id/follow")
+  @UseGuards(JwtAuthGuard)
+  followPosting(
+    @Param("id") id: string,
+    @Req() req: ReqWithUser,
+  ): Promise<FollowPosting> {
+    console.log("hi");
+
+    return this.postingsService.followPosting(id, req.user);
   }
 
   @Post("create")

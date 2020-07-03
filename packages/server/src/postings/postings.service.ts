@@ -4,6 +4,7 @@ import { CreatePostingDto } from "./dto/createPosting.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import User from "../users/user.entity";
+import { FollowPosting } from "../interfaces";
 
 @Injectable()
 export default class PostingsService {
@@ -33,5 +34,37 @@ export default class PostingsService {
     await this.postingsRepository.save(createdPosting);
 
     return createdPosting;
+  }
+
+  // if just followed return true if just unfollowed return false
+  async followPosting(id: string, user: User): Promise<FollowPosting> {
+    const posting = await this.postingsRepository.findOne(id, {
+      relations: ["followers"],
+    });
+
+    if (!posting)
+      throw new HttpException(
+        "Posting with this id doesn't exist",
+        HttpStatus.NOT_FOUND,
+      );
+
+    // somehow follower === user doesn't work
+    const followerIds = posting.followers.map((follower) => follower.id);
+
+    // if not a follower then follow
+    if (!followerIds.includes(user.id)) {
+      posting.followers.push(user);
+      await this.postingsRepository.save(posting);
+
+      return { posting, isFollowed: true };
+    } else {
+      // else unfollow
+      posting.followers = posting.followers.filter(
+        (follower) => follower.id !== user.id,
+      );
+      await this.postingsRepository.save(posting);
+
+      return { posting, isFollowed: false };
+    }
   }
 }
