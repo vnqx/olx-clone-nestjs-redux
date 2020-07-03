@@ -53,7 +53,9 @@ export default function SignInForm(): React.ReactElement {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/sign-up">Don&apos;t have an account? Sign up</Link>
+              <Link to="/auth/sign-up">
+                Don&apos;t have an account? Sign up
+              </Link>
             </Grid>
           </Grid>
         </Form>

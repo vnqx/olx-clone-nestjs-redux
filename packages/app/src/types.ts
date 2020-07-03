@@ -1,5 +1,5 @@
 export interface Posting {
-  id: number;
+  id: string;
   title: string;
   price: number;
   description: string;
@@ -12,5 +12,5 @@ export interface Me {
   firstName: string;
   lastName: string;
   email: string;
-  id: number;
+  id: string;
 }

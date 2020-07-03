@@ -17,4 +17,10 @@ export async function create(input: CreatePostingFormFields): Promise<Posting> {
   return posting;
 }
 
-export default { getAll, create };
+export async function getById(id: string): Promise<Posting> {
+  const { data: posting } = await Axios.get(`${baseUrl}/${id}`);
+
+  return posting;
+}
+
+export default { getAll, create, getById };
