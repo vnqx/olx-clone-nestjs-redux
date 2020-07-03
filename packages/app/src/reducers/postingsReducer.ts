@@ -29,9 +29,11 @@ function postingsReducer(
   }
 }
 
-export function loadPostings() {
+export function loadPostings(filter?: string) {
   return async (dispatch: Dispatch): Promise<void> => {
-    const postings = await postingsService.getAll();
+    const postings = filter
+      ? await postingsService.getByTitle(filter)
+      : await postingsService.getAll();
 
     dispatch({
       type: PostingsActionType.LOAD_POSTINGS,

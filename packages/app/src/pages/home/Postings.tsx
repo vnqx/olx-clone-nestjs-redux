@@ -7,10 +7,11 @@ import { RootState } from "../../store";
 
 export default function Postings(): React.ReactElement {
   const dispatch = useDispatch();
+  const filter = useSelector((state: RootState) => state.filter);
 
   useEffect(() => {
-    dispatch(loadPostings());
-  }, [dispatch]);
+    dispatch(loadPostings(filter));
+  }, [dispatch, filter]);
 
   const postings = useSelector((state: RootState) => state.postings);
 

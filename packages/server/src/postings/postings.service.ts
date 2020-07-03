@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import Posting from "./posting.entity";
 import { CreatePostingDto } from "./dto/createPosting.dto";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Repository, Like } from "typeorm";
 import User from "../users/user.entity";
 import { FollowPosting } from "../interfaces";
 
@@ -26,6 +26,16 @@ export default class PostingsService {
       );
 
     return posting;
+  }
+
+  async getByTitle(filter: string): Promise<Posting[]> {
+    const postings = await this.postingsRepository
+      .createQueryBuilder()
+      .select()
+      .where("title ILIKE :filter", { filter: `%${filter}%` })
+      .getMany();
+
+    return postings;
   }
 
   async editPosting(

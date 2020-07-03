@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "./components/header/SignOutButton";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./store";
 import {
   Avatar,
@@ -10,10 +10,10 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   Theme,
 } from "@material-ui/core";
 import NavLink from "./components/header/NavLink";
+import { resetFilter } from "./reducers/filterReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Header(): React.ReactElement {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const me = useSelector((state: RootState) => state.me);
 
@@ -46,6 +47,7 @@ export default function Header(): React.ReactElement {
             variant="h5"
             className={classes.title}
             color="inherit"
+            onClick={() => dispatch(resetFilter())}
           >
             Clolx
           </Typography>

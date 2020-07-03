@@ -22,12 +22,19 @@ export default class PostingsController {
 
   @Get()
   getAll(): Promise<Posting[]> {
+    console.log("dd");
+
     return this.postingsService.getAll();
   }
 
   @Get(":id")
   getById(@Param("id") id: string): Promise<Posting> {
     return this.postingsService.getById(id);
+  }
+
+  @Get("search/:filter")
+  getByTitle(@Param("filter") filter: string): Promise<Posting[]> {
+    return this.postingsService.getByTitle(filter);
   }
 
   @Put(":id/edit")

@@ -74,6 +74,14 @@ async function update(id: string, input: PostingFormFields): Promise<Posting> {
   return updatedPosting;
 }
 
+async function getByTitle(filter: string): Promise<Posting[]> {
+  const { data: postings } = await Axios.get<Posting[]>(
+    `${baseUrl}/search/${filter}`,
+  );
+
+  return postings;
+}
+
 export default {
   getAll,
   create,
@@ -83,4 +91,5 @@ export default {
   getAllMyPostings,
   remove,
   update,
+  getByTitle,
 };
