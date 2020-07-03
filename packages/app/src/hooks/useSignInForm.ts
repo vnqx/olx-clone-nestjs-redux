@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { signIn } from "../reducers/authReducer";
+import { useNavigate } from "react-router-dom";
 
 export interface SignInFormFields {
   email: string;
@@ -15,6 +16,7 @@ interface UseSignInForm {
 
 export default function useSignInForm(): UseSignInForm {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const initialValues: SignInFormFields = {
     email: "",
     password: "",
@@ -32,8 +34,7 @@ export default function useSignInForm(): UseSignInForm {
   });
 
   function handleSubmit(input: SignInFormFields) {
-    dispatch(signIn(input));
-    return true;
+    dispatch(signIn(input, navigate));
   }
 
   return { initialValues, validationSchema, handleSubmit };

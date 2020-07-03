@@ -28,7 +28,6 @@ export interface SignUpAction {
 
 export interface SignOutAction {
   type: typeof AuthActionType.SIGN_OUT;
-  payload: Me;
 }
 
 export type AuthAction =
@@ -39,22 +38,24 @@ export type AuthAction =
 
 export interface AuthState {
   me: Me | null;
+  isAuthenticated: null | boolean;
 }
 
 export const initialState: AuthState = {
   me: null,
+  isAuthenticated: null,
 };
 
 function authReducer(state = initialState, action: AuthAction): AuthState {
   switch (action.type) {
     case AuthActionType.INIT_ME:
-      return { ...state, me: action.payload };
+      return { ...state, me: action.payload, isAuthenticated: true };
     case AuthActionType.SIGN_IN:
-      return { ...state, me: action.payload };
+      return { ...state, me: action.payload, isAuthenticated: true };
     case AuthActionType.SIGN_UP:
-      return { ...state, me: action.payload };
+      return { ...state, me: action.payload, isAuthenticated: true };
     case AuthActionType.SIGN_OUT:
-      return { ...state, me: action.payload };
+      return { ...state, me: null, isAuthenticated: false };
     default:
       return state;
   }
@@ -70,7 +71,10 @@ export function initMe() {
   };
 }
 
-export function signIn(input: SignInFormFields) {
+export function signIn(
+  input: SignInFormFields,
+  navigate: (text: string) => void,
+) {
   return async (dispatch: Dispatch): Promise<void> => {
     const me = await authService.signIn(input);
 
@@ -78,10 +82,15 @@ export function signIn(input: SignInFormFields) {
       type: AuthActionType.SIGN_IN,
       payload: me,
     });
+
+    navigate("/");
   };
 }
 
-export function signUp(input: SignUpFormFields) {
+export function signUp(
+  input: SignUpFormFields,
+  navigate: (text: string) => void,
+) {
   return async (dispatch: Dispatch): Promise<void> => {
     const me = await authService.signUp(input);
 
@@ -89,17 +98,20 @@ export function signUp(input: SignUpFormFields) {
       type: AuthActionType.SIGN_UP,
       payload: me,
     });
+
+    navigate("/");
   };
 }
 
-export function signOut() {
+export function signOut(navigate: (text: string) => void) {
   return async (dispatch: Dispatch): Promise<void> => {
     await authService.signOut();
 
     dispatch({
       type: AuthActionType.SIGN_OUT,
-      payload: null,
     });
+
+    navigate("/");
   };
 }
 

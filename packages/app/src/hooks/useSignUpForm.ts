@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import authService from "../services/authService";
@@ -19,6 +20,7 @@ interface UseSignUpForm {
 }
 
 export default function useSignUpForm(): UseSignUpForm {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const initialValues: SignUpFormFields = {
     firstName: "",
@@ -45,7 +47,7 @@ export default function useSignUpForm(): UseSignUpForm {
   });
 
   function handleSubmit(input: SignUpFormFields) {
-    dispatch(signUp(input));
+    dispatch(signUp(input, navigate));
     return true;
   }
 

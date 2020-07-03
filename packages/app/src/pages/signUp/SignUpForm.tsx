@@ -1,14 +1,29 @@
 import React from "react";
-import { Formik, Field, Form } from "formik";
-import { Button, makeStyles, Grid } from "@material-ui/core";
+import { Formik, Form } from "formik";
+import {
+  Button,
+  makeStyles,
+  Grid,
+  Link as MLink,
+  Theme,
+  createStyles,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import useSignUpForm from "../../hooks/useSignUpForm";
+import MyTextField from "../../components/MyTextField";
 
-const useStyles = makeStyles(() => ({
-  root: {},
-  form: {},
-  submit: {},
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    form: {
+      width: "100%", // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+      padding: theme.spacing(0, 3, 2),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }),
+);
 
 export default function SignUpForm(): React.ReactElement {
   const classes = useStyles();
@@ -22,30 +37,14 @@ export default function SignUpForm(): React.ReactElement {
     >
       {({ isSubmitting }) => (
         <Form noValidate className={classes.form}>
-          <Field
-            name="firstName"
-            type="text"
-            label="First name"
-            placeholder="First name"
-          />
-          <Field
-            name="lastName"
-            type="text"
-            label="Last name"
-            placeholder="Last name"
-          />
-          <Field name="email" type="email" label="Email" placeholder="Email" />
-          <Field
-            name="password"
-            type="password"
-            label="Password"
-            placeholder="Password"
-          />
-          <Field
+          <MyTextField name="firstName" type="text" label="First name" />
+          <MyTextField name="lastName" type="text" label="Last name" />
+          <MyTextField name="email" type="email" label="Email" />{" "}
+          <MyTextField name="password" type="text" label="Password" />
+          <MyTextField
             name="passwordConfirm"
-            type="password"
+            type="text"
             label="Confirm password"
-            placeholder="Confirm password"
           />
           <Button
             type="submit"
@@ -59,7 +58,9 @@ export default function SignUpForm(): React.ReactElement {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/auth/sign-in">Already have an account? Sign in</Link>
+              <MLink component={Link} to="/auth/sign-in">
+                Already have an account? Sign In
+              </MLink>
             </Grid>
           </Grid>
         </Form>

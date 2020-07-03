@@ -9,6 +9,7 @@ import {
 import DeletePhotoButton from "./DeletePhotoButton";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
+import SetFrontPhotoButton from "./SetFrontPhotoButton";
 
 interface Props {
   photoUrls: string[];
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() =>
       marginBottom: "8px",
     },
     gridList: {
-      width: 500,
+      width: "100%",
       height: "auto",
     },
     icon: {
@@ -51,7 +52,12 @@ export default function UploadedPhotos(): React.ReactElement {
             <img src={url} alt="your uploaded photo" />
             <GridListTileBar
               className={classes.tileBar}
-              actionIcon={<DeletePhotoButton url={url} />}
+              actionIcon={
+                <>
+                  <DeletePhotoButton url={url} />
+                  <SetFrontPhotoButton url={url} />
+                </>
+              }
             />
           </GridListTile>
         ))}

@@ -5,9 +5,9 @@
     "packages/*"
   ],
   "scripts": {
-    "app:start": "yarn workspace app start",
+    "app": "yarn workspace app start",
     "server:dev": "yarn workspace server dev",
-    "dev": "concurrently --kill-others-on-fail \"yarn app:start\" \"yarn server:dev\""
+    "dev": "concurrently --kill-others-on-fail \"yarn app\" \"yarn server:dev\""
   },
   "license": "MIT",
   "devDependencies": {

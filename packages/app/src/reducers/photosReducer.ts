@@ -5,6 +5,7 @@ export enum PhotosActionType {
   DELETE_PHOTO = "DELETE_PHOTO",
   ADD_PHOTOS = "ADD_PHOTOS",
   LOAD_PHOTOS = "LOAD_PHOTOS",
+  MOVE_PHOTO = "MOVE_PHOTO",
 }
 
 export interface DeletePhotoAction {
@@ -22,10 +23,16 @@ export interface LoadPhotosAction {
   payload: true;
 }
 
+export interface MovePhotoAction {
+  type: PhotosActionType.MOVE_PHOTO;
+  payload: string;
+}
+
 export type PhotosAction =
   | DeletePhotoAction
   | AddPhotosAction
-  | LoadPhotosAction;
+  | LoadPhotosAction
+  | MovePhotoAction;
 
 export interface PhotosState {
   urls: string[];
@@ -36,6 +43,11 @@ export const initialState: PhotosState = {
   urls: [],
   loading: false,
 };
+
+// helper function - modulo for negative numbers, (-13) % 64 == 51
+function mod(n: number, m: number) {
+  return ((n % m) + m) % m;
+}
 
 function photosReducer(
   state = initialState,
@@ -55,6 +67,22 @@ function photosReducer(
       };
     case PhotosActionType.LOAD_PHOTOS:
       return { ...state, loading: true };
+    case PhotosActionType.MOVE_PHOTO:
+      for (let i = 0; i < state.urls.length; i++) {
+        // swap two photos
+        if (state.urls[i] === action.payload) {
+          // if it was state.urls[i], state.urls[i+1] it would've been
+          // pushing it forward, needed the mod function so that
+          // i-1 for i equal to 0 is state.urls.length-1
+          [state.urls[i], state.urls[mod(i - 1, state.urls.length)]] = [
+            state.urls[mod(i - 1, state.urls.length)],
+            state.urls[i],
+          ];
+          break;
+        }
+      }
+
+      return { ...state };
     default:
       return state;
   }
@@ -64,6 +92,15 @@ export function deletePhoto(url: string) {
   return async (dispatch: Dispatch): Promise<void> => {
     dispatch({
       type: PhotosActionType.DELETE_PHOTO,
+      payload: url,
+    });
+  };
+}
+
+export function movePhoto(url: string) {
+  return async (dispatch: Dispatch): Promise<void> => {
+    dispatch({
+      type: PhotosActionType.MOVE_PHOTO,
       payload: url,
     });
   };
