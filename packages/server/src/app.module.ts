@@ -6,6 +6,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { UploadModule } from "./upload/upload.module";
 import { AccountModule } from "./account/account.module";
+import { ChatsModule } from "./chats/chats.module";
 import Joi from "@hapi/joi";
 
 @Module({
@@ -31,6 +32,7 @@ import Joi from "@hapi/joi";
     UsersModule,
     UploadModule,
     AccountModule,
+    ChatsModule,
   ],
   controllers: [],
   providers: [],

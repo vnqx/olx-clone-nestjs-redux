@@ -2,7 +2,7 @@ import { AccountService } from "./account.service";
 import { Controller, Get, UseGuards, Req } from "@nestjs/common";
 import JwtAuthGuard from "../auth/jwtAuth.guard";
 import { ReqWithUser } from "../interfaces";
-import { Posting } from "packages/app/src/types";
+import Posting from "../postings/posting.entity";
 
 @Controller("account")
 export class AccountController {
@@ -17,8 +17,6 @@ export class AccountController {
   @Get("postings")
   @UseGuards(JwtAuthGuard)
   getAllMyPostings(@Req() req: ReqWithUser): Promise<Posting[]> {
-    console.log("ddd");
-
     return this.accountService.getAllMyPostings(req.user.id);
   }
 }

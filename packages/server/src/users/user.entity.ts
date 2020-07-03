@@ -6,6 +6,7 @@ import {
   OneToMany,
 } from "typeorm";
 import Posting from "../postings/posting.entity";
+import Chat from "../chats/chat.entity";
 
 @Entity()
 export default class User {
@@ -21,7 +22,7 @@ export default class User {
   @Column({ unique: true })
   email!: string;
 
-  @Column()
+  @Column({ select: false })
   passwordHash!: string;
 
   @ManyToMany(() => Posting, (posting) => posting.followers)
@@ -29,4 +30,7 @@ export default class User {
 
   @OneToMany(() => Posting, (posting) => posting.user)
   myPostings!: Posting[];
+
+  @ManyToMany(() => Chat, (chat) => chat.users)
+  chats!: Chat[];
 }

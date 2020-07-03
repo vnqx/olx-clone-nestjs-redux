@@ -8,8 +8,10 @@ import {
   ManyToOne,
   JoinColumn,
   UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
 import User from "../users/user.entity";
+import Chat from "../chats/chat.entity";
 
 @Entity()
 export default class Posting {
@@ -57,4 +59,7 @@ export default class Posting {
   @ManyToOne(() => User, (user) => user.myPostings, { cascade: true })
   @JoinColumn()
   user!: User;
+
+  @OneToMany(() => Chat, (chat) => chat.posting)
+  chats!: Chat[];
 }
