@@ -34,8 +34,6 @@ export default class PostingsController {
     @Param("id") id: string,
     @Req() req: ReqWithUser,
   ): Promise<FollowPosting> {
-    console.log("hi");
-
     return this.postingsService.followPosting(id, req.user);
   }
 

@@ -11,9 +11,11 @@ import {
   Toolbar,
   Typography,
   Button,
+  Theme,
 } from "@material-ui/core";
+import NavLink from "./components/header/NavLink";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -22,8 +24,9 @@ const useStyles = makeStyles(() =>
       flexGrow: 1,
     },
     toolbar: {
-      "& > a": {
+      "& > *": {
         textDecoration: "none",
+        margin: theme.spacing(0, 1),
       },
     },
   }),
@@ -46,19 +49,17 @@ export default function Header(): React.ReactElement {
           >
             Clolx
           </Typography>
-          <Link to="postings/create">
-            <Button>New</Button>
-          </Link>
+
           {me ? (
-            <SignOutButton />
+            <>
+              <NavLink to="postings/create" text="New" />
+              <NavLink to="account/followed" text="Followed" />
+              <SignOutButton />
+            </>
           ) : (
             <>
-              <Link to="auth/sign-in">
-                <Button>Sign In</Button>
-              </Link>
-              <Link to="auth/sign-up">
-                <Button>Sign Up</Button>
-              </Link>
+              <NavLink to="auth/sign-in" text="Sign In" />
+              <NavLink to="auth/sign-up" text="Sign Up" />
             </>
           )}
 

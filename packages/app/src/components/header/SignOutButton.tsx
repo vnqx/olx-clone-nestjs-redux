@@ -12,7 +12,12 @@ export default function SignOutButton(): React.ReactElement {
   }
 
   return (
-    <Button type="submit" onClick={handleClick}>
+    <Button
+      type="submit"
+      onClick={handleClick}
+      variant="contained"
+      color="primary"
+    >
       Sign Out
     </Button>
   );

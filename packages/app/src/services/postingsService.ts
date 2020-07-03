@@ -44,7 +44,7 @@ interface FollowedPostingsData {
 
 async function getAllFollowedPostings(): Promise<FollowedPostingsData> {
   const { data: postings } = await Axios.get<FollowedPostingsData>(
-    `http://localhost:4000/followed`,
+    `http://localhost:4000/account/followed`,
     { withCredentials: true },
   );
 

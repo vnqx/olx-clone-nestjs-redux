@@ -37,7 +37,7 @@ export default function SignInForm(): React.ReactElement {
     >
       {({ isSubmitting }) => (
         <Form noValidate className={classes.form}>
-          <MyTextField name="email" type="email" label="Email" />
+          <MyTextField name="email" type="email" label="Email" autoFocus />
           <MyTextField name="password" type="password" label="Password" />
           <Button
             type="submit"

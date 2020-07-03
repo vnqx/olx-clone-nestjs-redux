@@ -37,7 +37,12 @@ export default function SignUpForm(): React.ReactElement {
     >
       {({ isSubmitting }) => (
         <Form noValidate className={classes.form}>
-          <MyTextField name="firstName" type="text" label="First name" />
+          <MyTextField
+            name="firstName"
+            type="text"
+            label="First name"
+            autoFocus
+          />
           <MyTextField name="lastName" type="text" label="Last name" />
           <MyTextField name="email" type="email" label="Email" />{" "}
           <MyTextField name="password" type="text" label="Password" />
