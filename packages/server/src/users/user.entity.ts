@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
+import Posting from "../postings/posting.entity";
 
 @Entity()
 export default class User {
@@ -16,4 +17,7 @@ export default class User {
 
   @Column()
   passwordHash!: string;
+
+  @ManyToMany(() => Posting, (posting) => posting.followers)
+  followedPostings!: Posting[];
 }

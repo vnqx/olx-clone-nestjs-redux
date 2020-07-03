@@ -1,5 +1,15 @@
+import { ReqWithUser } from "./../interfaces";
 import { CreatePostingDto } from "./dto/createPosting.dto";
-import { Controller, Get, Post, Body, UseGuards, Param } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Param,
+  Patch,
+  Req,
+} from "@nestjs/common";
 import Posting from "./posting.entity";
 import PostingsService from "./postings.service";
 import JwtAuthGuard from "../auth/jwtAuth.guard";

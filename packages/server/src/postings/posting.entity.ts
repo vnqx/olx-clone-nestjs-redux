@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
+import User from "../users/user.entity";
 
 @Entity()
 export default class Posting {
@@ -28,4 +35,8 @@ export default class Posting {
 
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt!: Date;
+
+  @ManyToMany(() => User, (user) => user.followedPostings, { cascade: true })
+  @JoinTable()
+  followers!: User[];
 }

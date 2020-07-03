@@ -18,6 +18,13 @@ export async function create(input: CreatePostingFormFields): Promise<Posting> {
 }
 
 export async function getById(id: string): Promise<Posting> {
+  const { data } = await Axios.patch(
+    `${baseUrl}/${id}/follow`,
+    {},
+    { withCredentials: true },
+  );
+  console.log(data);
+
   const { data: posting } = await Axios.get(`${baseUrl}/${id}`);
 
   return posting;
