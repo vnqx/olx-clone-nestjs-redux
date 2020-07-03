@@ -13,4 +13,5 @@ export interface Me {
   lastName: string;
   email: string;
   id: string;
+  followedPostings: Posting[];
 }

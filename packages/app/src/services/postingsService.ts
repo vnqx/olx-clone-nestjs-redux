@@ -18,16 +18,43 @@ export async function create(input: CreatePostingFormFields): Promise<Posting> {
 }
 
 export async function getById(id: string): Promise<Posting> {
-  const { data } = await Axios.patch(
-    `${baseUrl}/${id}/follow`,
-    {},
-    { withCredentials: true },
-  );
-  console.log(data);
-
   const { data: posting } = await Axios.get(`${baseUrl}/${id}`);
 
   return posting;
 }
 
-export default { getAll, create, getById };
+interface FollowPostingData {
+  posting: Posting;
+  isFollowed: boolean;
+}
+
+export async function followPosting(id: string): Promise<FollowPostingData> {
+  const { data } = await Axios.patch<FollowPostingData>(
+    `${baseUrl}/${id}/follow`,
+    {},
+    { withCredentials: true },
+  );
+
+  return data;
+}
+
+interface FollowedPostingsData {
+  postings: Posting[];
+}
+
+export async function getAllFollowedPostings(): Promise<FollowedPostingsData> {
+  const { data: postings } = await Axios.get<FollowedPostingsData>(
+    `http://localhost:4000/followed`,
+    { withCredentials: true },
+  );
+
+  return postings;
+}
+
+export default {
+  getAll,
+  create,
+  getById,
+  followPosting,
+  getAllFollowedPostings,
+};

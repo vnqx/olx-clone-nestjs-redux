@@ -31,7 +31,7 @@ const useStyles = makeStyles(() =>
 
 export default function Header(): React.ReactElement {
   const classes = useStyles();
-  const me = useSelector((state: RootState) => state.auth.me);
+  const me = useSelector((state: RootState) => state.me);
 
   return (
     <div className={classes.root}>

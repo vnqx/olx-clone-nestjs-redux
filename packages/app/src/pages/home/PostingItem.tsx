@@ -9,6 +9,8 @@ import {
   createStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
 
 interface Props {
   posting: Posting;
@@ -39,7 +41,6 @@ const useStyles = makeStyles(() =>
 
 export default function PostingItem({ posting }: Props): React.ReactElement {
   const classes = useStyles();
-
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card className={classes.card}>

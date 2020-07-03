@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { initPosting } from "../reducers/postingsReducer";
 import {
   Container,
   Card,
@@ -15,6 +14,7 @@ import {
   CardActions,
 } from "@material-ui/core";
 import { RootState } from "../store";
+import { loadFullPosting } from "../reducers/fullPostingReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,12 +63,14 @@ export default function FullPosting(): React.ReactElement {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initPosting(id));
+    dispatch(loadFullPosting(id));
   }, [dispatch, id]);
 
-  const posting = useSelector((state: RootState) => state.postings.fullPosting);
+  const posting = useSelector((state: RootState) => state.fullPosting);
 
-  if (!posting) return <div>ooasodasodasodasodo</div>;
+  // in case there's loaded some posting in the store already
+  // not to display the old one
+  if (posting?.id !== id) return <div>ooasodasodasodasodo</div>;
 
   return (
     <Container component="main" maxWidth="sm">

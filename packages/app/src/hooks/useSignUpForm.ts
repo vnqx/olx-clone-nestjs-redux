@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import authService from "../services/authService";
 import { Me } from "../types";
-import { signUp } from "../reducers/authReducer";
+import { signUp } from "../reducers/meReducer";
 
 export interface SignUpFormFields {
   firstName: string;

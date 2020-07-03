@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { signIn } from "../reducers/authReducer";
+import { signIn } from "../reducers/meReducer";
 import { useNavigate } from "react-router-dom";
 
 export interface SignInFormFields {

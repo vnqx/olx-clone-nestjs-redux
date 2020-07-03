@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { createPosting } from "../reducers/postingsReducer";
 import { useNavigate } from "react-router-dom";
+import { createPosting } from "../reducers/fullPostingReducer";
 
 export interface CreatePostingFormFields {
   title: string;

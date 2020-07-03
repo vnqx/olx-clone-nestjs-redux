@@ -1,100 +1,42 @@
-import { CreatePostingFormFields } from "./../hooks/useCreatePosting";
 import { Dispatch } from "redux";
 import { Posting } from "./../types";
 import postingsService from "../services/postingsService";
 
 export enum PostingsActionType {
-  INIT_POSTING = "INIT_POSTING",
-  INIT_POSTINGS = "INIT_POSTINGS",
-  CREATE_POSTING = "CREATE_POSTING",
+  LOAD_POSTINGS = "LOAD_POSTINGS",
 }
 
-export interface PostingsState {
-  all: Posting[];
-  fullPosting: Posting | null;
-}
+export type PostingsState = Posting[];
 
-export interface InitPostingsAction {
-  type: PostingsActionType.INIT_POSTINGS;
+export interface LoadPostingsAction {
+  type: PostingsActionType.LOAD_POSTINGS;
   payload: Posting[];
 }
 
-export interface CreatePostingAction {
-  type: PostingsActionType.CREATE_POSTING;
-  payload: Posting;
-}
+export type PostingsAction = LoadPostingsAction;
 
-export interface InitPostingAction {
-  type: PostingsActionType.INIT_POSTING;
-  payload: Posting;
-}
-
-export type PostingsAction =
-  | InitPostingsAction
-  | CreatePostingAction
-  | InitPostingAction;
-
-export const initialState: PostingsState = {
-  all: [],
-  fullPosting: null,
-};
+export const initialState: PostingsState = [];
 
 function postingsReducer(
   state = initialState,
   action: PostingsAction,
 ): PostingsState {
   switch (action.type) {
-    case PostingsActionType.INIT_POSTING:
-      return { ...state, fullPosting: action.payload };
-    case PostingsActionType.INIT_POSTINGS:
-      return { ...state, all: action.payload };
-    case PostingsActionType.CREATE_POSTING:
-      return {
-        ...state,
-        all: state.all.concat(action.payload),
-        fullPosting: action.payload,
-      };
+    case PostingsActionType.LOAD_POSTINGS:
+      return action.payload;
     default:
       return state;
   }
 }
 
-export function initPostings() {
+export function loadPostings() {
   return async (dispatch: Dispatch): Promise<void> => {
     const postings = await postingsService.getAll();
 
     dispatch({
-      type: PostingsActionType.INIT_POSTINGS,
+      type: PostingsActionType.LOAD_POSTINGS,
       payload: postings,
     });
-  };
-}
-
-export function initPosting(id: string) {
-  return async (dispatch: Dispatch): Promise<void> => {
-    const posting = await postingsService.getById(id);
-
-    dispatch({
-      type: PostingsActionType.INIT_POSTING,
-      payload: posting,
-    });
-  };
-}
-
-export function createPosting(
-  input: CreatePostingFormFields,
-  // navigate: NavigateFunction,
-  // seems like NavigateFunction is not exported
-  navigate: (text: string) => void,
-) {
-  return async (dispatch: Dispatch): Promise<void> => {
-    const posting = await postingsService.create(input);
-    dispatch({
-      type: PostingsActionType.CREATE_POSTING,
-      payload: posting,
-    });
-
-    navigate(`/postings/${posting.id}`);
   };
 }
 

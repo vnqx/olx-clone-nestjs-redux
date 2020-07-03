@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { signOut } from "../../reducers/authReducer";
+import { signOut } from "../../reducers/meReducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

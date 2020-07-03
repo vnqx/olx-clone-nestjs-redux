@@ -4,7 +4,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Header from "./Header";
 import { useDispatch } from "react-redux";
-import { initMe } from "./reducers/authReducer";
+import { initMe } from "./reducers/meReducer";
 import FullPosting from "./pages/FullPosting";
 import Home from "./pages/Home";
 import CreatePosting from "./pages/CreatePosting";
