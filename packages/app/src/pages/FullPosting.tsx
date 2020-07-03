@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import { RootState } from "../store";
 import { loadFullPosting } from "../reducers/fullPostingReducer";
+import FollowButton from "../components/FollowButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -93,7 +94,9 @@ export default function FullPosting(): React.ReactElement {
           </Typography>
         </CardContent>
         <CardActions disableSpacing className={classes.actions}>
-          <div className={classes.iconActions}>follow/unfollow, phone</div>
+          <div className={classes.iconActions}>
+            <FollowButton id={posting.id} /> phone
+          </div>
           <div>message dialog</div>
         </CardActions>
       </Card>

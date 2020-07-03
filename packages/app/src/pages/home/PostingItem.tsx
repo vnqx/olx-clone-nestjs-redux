@@ -9,8 +9,7 @@ import {
   createStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { RootState } from "../../store";
-import { useSelector } from "react-redux";
+import FollowButton from "../../components/FollowButton";
 
 interface Props {
   posting: Posting;
@@ -41,6 +40,7 @@ const useStyles = makeStyles(() =>
 
 export default function PostingItem({ posting }: Props): React.ReactElement {
   const classes = useStyles();
+
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card className={classes.card}>
@@ -55,7 +55,9 @@ export default function PostingItem({ posting }: Props): React.ReactElement {
           <div className={classes.header}>
             <CardHeader title={`$${posting.price}`} subheader={posting.title} />
           </div>
-          <div className={classes.action}>action</div>
+          <div className={classes.action}>
+            <FollowButton id={posting.id} />
+          </div>
         </div>
       </Card>
     </Grid>

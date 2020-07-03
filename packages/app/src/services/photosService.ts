@@ -7,7 +7,7 @@ async function uploadPhotos(photos: FileList): Promise<string[]> {
     formData.append("photos", photo);
   });
 
-  const { data: photoUrls } = await Axios.post(baseUrl, formData, {
+  const { data: photoUrls } = await Axios.post<string[]>(baseUrl, formData, {
     withCredentials: true,
     headers: {
       "Content-Type": "multipart/form-data",

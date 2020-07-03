@@ -3,6 +3,7 @@ import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import Posting from "../postings/posting.entity";
 import User from "../users/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { FollowPosting } from "../interfaces";
 
 @Injectable()
 export class FollowService {
@@ -14,7 +15,7 @@ export class FollowService {
   ) {}
 
   // if just followed return true if just unfollowed return false
-  async followPosting(id: string, user: User): Promise<boolean> {
+  async followPosting(id: string, user: User): Promise<FollowPosting> {
     const posting = await this.postingsRepository.findOne(id, {
       relations: ["followers"],
     });
@@ -25,18 +26,23 @@ export class FollowService {
         HttpStatus.NOT_FOUND,
       );
 
+    // somehow follower === user doesn't work
+    const followerIds = posting.followers.map((follower) => follower.id);
+
     // if not a follower then follow
-    if (posting.followers.includes(user)) {
+    if (!followerIds.includes(user.id)) {
       posting.followers.push(user);
       await this.postingsRepository.save(posting);
-      return true;
+
+      return { posting, isFollowed: true };
     } else {
       // else unfollow
       posting.followers = posting.followers.filter(
-        (follower) => follower !== user,
+        (follower) => follower.id !== user.id,
       );
       await this.postingsRepository.save(posting);
-      return false;
+
+      return { posting, isFollowed: false };
     }
   }
 

@@ -54,8 +54,8 @@ export function followPosting(id: string) {
 
     dispatch({
       type: isFollowed
-        ? FollowedPostingsActionType.UNFOLLOW_POSTING
-        : FollowedPostingsActionType.FOLLOW_POSTING,
+        ? FollowedPostingsActionType.FOLLOW_POSTING
+        : FollowedPostingsActionType.UNFOLLOW_POSTING,
       payload: posting,
     });
   };

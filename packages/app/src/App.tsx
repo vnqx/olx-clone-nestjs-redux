@@ -3,18 +3,25 @@ import { Routes, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Header from "./Header";
-import { useDispatch } from "react-redux";
-import { initMe } from "./reducers/meReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { loadMe } from "./reducers/meReducer";
 import FullPosting from "./pages/FullPosting";
 import Home from "./pages/Home";
 import CreatePosting from "./pages/CreatePosting";
+import { loadFollowedPostings } from "./reducers/followedPostingsReducer";
+import { RootState } from "./store";
 
 export default function App(): React.ReactElement {
   const dispatch = useDispatch();
+  const me = useSelector((state: RootState) => state.me);
 
   useEffect(() => {
-    dispatch(initMe());
-  }, [dispatch]);
+    if (me) {
+      dispatch(loadFollowedPostings());
+    } else {
+      dispatch(loadMe());
+    }
+  }, [dispatch, me]);
 
   return (
     <>

@@ -36,7 +36,7 @@ function meReducer(state = initialState, action: MeAction): MeState {
   }
 }
 
-export function initMe() {
+export function loadMe() {
   return async (dispatch: Dispatch): Promise<void> => {
     const me = await authService.getMe();
     dispatch({

@@ -4,12 +4,12 @@ import { Posting } from "../types";
 
 const baseUrl = "http://localhost:4000/postings";
 
-export async function getAll(): Promise<Posting[]> {
+async function getAll(): Promise<Posting[]> {
   const { data: postings } = await Axios.get(baseUrl);
   return postings;
 }
 
-export async function create(input: CreatePostingFormFields): Promise<Posting> {
+async function create(input: CreatePostingFormFields): Promise<Posting> {
   const { data: posting } = await Axios.post(`${baseUrl}/create`, input, {
     withCredentials: true,
   });
@@ -17,7 +17,7 @@ export async function create(input: CreatePostingFormFields): Promise<Posting> {
   return posting;
 }
 
-export async function getById(id: string): Promise<Posting> {
+async function getById(id: string): Promise<Posting> {
   const { data: posting } = await Axios.get(`${baseUrl}/${id}`);
 
   return posting;
@@ -28,7 +28,7 @@ interface FollowPostingData {
   isFollowed: boolean;
 }
 
-export async function followPosting(id: string): Promise<FollowPostingData> {
+async function followPosting(id: string): Promise<FollowPostingData> {
   const { data } = await Axios.patch<FollowPostingData>(
     `${baseUrl}/${id}/follow`,
     {},
@@ -42,7 +42,7 @@ interface FollowedPostingsData {
   postings: Posting[];
 }
 
-export async function getAllFollowedPostings(): Promise<FollowedPostingsData> {
+async function getAllFollowedPostings(): Promise<FollowedPostingsData> {
   const { data: postings } = await Axios.get<FollowedPostingsData>(
     `http://localhost:4000/followed`,
     { withCredentials: true },

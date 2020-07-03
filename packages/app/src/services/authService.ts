@@ -6,13 +6,13 @@ import Axios from "axios";
 const baseUrl = "http://localhost:4000/auth";
 
 async function getMe(): Promise<Me> {
-  const { data: me } = await Axios.get(baseUrl, { withCredentials: true });
+  const { data: me } = await Axios.get<Me>(baseUrl, { withCredentials: true });
 
   return me;
 }
 
 async function signIn(input: SignInFormFields): Promise<Me> {
-  const { data: me } = await Axios.post(`${baseUrl}/sign-in`, input, {
+  const { data: me } = await Axios.post<Me>(`${baseUrl}/sign-in`, input, {
     withCredentials: true,
   });
 
@@ -20,7 +20,7 @@ async function signIn(input: SignInFormFields): Promise<Me> {
 }
 
 async function signUp(input: SignUpFormFields): Promise<Me> {
-  const { data: me } = await Axios.post(`${baseUrl}/sign-up`, input, {
+  const { data: me } = await Axios.post<Me>(`${baseUrl}/sign-up`, input, {
     withCredentials: true,
   });
 
@@ -28,7 +28,7 @@ async function signUp(input: SignUpFormFields): Promise<Me> {
 }
 
 async function signOut(): Promise<void> {
-  await Axios.post(
+  await Axios.post<"OK">(
     `${baseUrl}/sign-out`,
     {},
     {
