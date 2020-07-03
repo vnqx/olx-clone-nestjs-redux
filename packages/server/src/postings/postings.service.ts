@@ -28,6 +28,41 @@ export default class PostingsService {
     return posting;
   }
 
+  async editPosting(
+    id: string,
+    createPostingDto: CreatePostingDto,
+    userId: string,
+  ): Promise<Posting> {
+    const posting = await this.postingsRepository.findOne(id, {
+      relations: ["user"],
+    });
+
+    if (!posting)
+      throw new HttpException(
+        "Posting with this id doesn't exist",
+        HttpStatus.NOT_FOUND,
+      );
+
+    if (posting.user.id !== userId)
+      throw new HttpException(
+        "You can only edit your own postings",
+        HttpStatus.FORBIDDEN,
+      );
+
+    await this.postingsRepository.update(posting.id, createPostingDto);
+
+    const updatedPosting = await this.postingsRepository.findOne(id);
+    console.log(updatedPosting);
+
+    if (!updatedPosting)
+      throw new HttpException(
+        "Something went wrong",
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+
+    return updatedPosting;
+  }
+
   async create(
     createPostingDto: CreatePostingDto,
     user: User,

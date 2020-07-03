@@ -7,6 +7,7 @@ import {
   JoinTable,
   ManyToOne,
   JoinColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import User from "../users/user.entity";
 
@@ -39,13 +40,14 @@ export default class Posting {
   })
   photos!: string[];
 
-  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
+  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
   createdAt!: Date;
 
   @Column("timestamp", {
-    default: () => "CURRENT_TIMESTAMP(6)",
-    onUpdate: "CURRENT_TIMESTAMP(6)",
+    default: () => "CURRENT_TIMESTAMP",
+    onUpdate: "CURRENT_TIMESTAMP",
   })
+  @UpdateDateColumn()
   updatedAt!: Date;
 
   @ManyToMany(() => User, (user) => user.followedPostings, { cascade: true })
