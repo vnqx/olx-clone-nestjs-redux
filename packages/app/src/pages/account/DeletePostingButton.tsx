@@ -19,7 +19,7 @@ export default function DeletePostingButton({
 
   return (
     <IconButton aria-label="delete posting" onClick={handleClick}>
-      <Delete />
+      <Delete fontSize="large" />
     </IconButton>
   );
 }

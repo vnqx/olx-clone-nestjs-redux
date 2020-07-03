@@ -1,7 +1,7 @@
+import { PostingFormFields } from "./../interfaces";
 import { Posting } from "../types";
 import postingsService from "../services/postingsService";
 import { Dispatch } from "redux";
-import { CreatePostingFormFields } from "../hooks/useCreatePosting";
 
 export enum FullPostingActionType {
   LOAD_FULL_POSTING = "LOAD_FULL_POSTING",
@@ -42,7 +42,7 @@ export function loadFullPosting(id: string) {
 }
 
 export function createPosting(
-  input: CreatePostingFormFields,
+  input: PostingFormFields,
   // navigate: NavigateFunction,
   // seems like NavigateFunction is not exported
   navigate: (text: string) => void,
@@ -55,5 +55,21 @@ export function createPosting(
     });
 
     navigate(`/postings/${posting.id}`);
+  };
+}
+
+export function editPosting(
+  id: string,
+  input: PostingFormFields,
+  navigate: (text: string) => void,
+) {
+  return async (dispatch: Dispatch): Promise<void> => {
+    const updatedPosting = await postingsService.update(id, input);
+    dispatch({
+      type: FullPostingActionType.LOAD_FULL_POSTING,
+      payload: updatedPosting,
+    });
+
+    navigate(`/postings/${updatedPosting.id}`);
   };
 }

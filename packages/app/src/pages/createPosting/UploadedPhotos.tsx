@@ -11,10 +11,6 @@ import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import MovePhotoButtons from "./MovePhotoButtons";
 
-interface Props {
-  photoUrls: string[];
-}
-
 const useStyles = makeStyles(() =>
   createStyles({
     root: {

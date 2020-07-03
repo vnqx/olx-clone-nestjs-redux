@@ -4,7 +4,7 @@ import photosService from "../services/photosService";
 export enum PhotosActionType {
   DELETE_PHOTO = "DELETE_PHOTO",
   ADD_PHOTOS = "ADD_PHOTOS",
-  LOAD_PHOTOS = "LOAD_PHOTOS",
+  PHOTOS_LOADING = "LOAD_PHOTOS",
   MOVE_PHOTO_LEFT = "MOVE_PHOTO_LEFT",
   MOVE_PHOTO_RIGHT = "MOVE_PHOTO_RIGHT",
 }
@@ -20,7 +20,7 @@ export interface AddPhotosAction {
 }
 
 export interface LoadPhotosAction {
-  type: PhotosActionType.LOAD_PHOTOS;
+  type: PhotosActionType.PHOTOS_LOADING;
   payload: true;
 }
 
@@ -72,7 +72,7 @@ function photosReducer(
         urls: state.urls.concat(action.payload),
         loading: false,
       };
-    case PhotosActionType.LOAD_PHOTOS:
+    case PhotosActionType.PHOTOS_LOADING:
       return { ...state, loading: true };
     case PhotosActionType.MOVE_PHOTO_LEFT:
       for (let i = 0; i < state.urls.length; i++) {
@@ -140,13 +140,22 @@ export function movePhotoRight(url: string) {
 
 export function uploadPhotos(photos: FileList) {
   return async (dispatch: Dispatch): Promise<void> => {
-    dispatch({ type: PhotosActionType.LOAD_PHOTOS, payload: true });
+    dispatch({ type: PhotosActionType.PHOTOS_LOADING, payload: true });
 
     const uploadedPhotoUrls = await photosService.uploadPhotos(photos);
 
     dispatch({
       type: PhotosActionType.ADD_PHOTOS,
       payload: uploadedPhotoUrls,
+    });
+  };
+}
+
+export function addPhotos(urls: string[]) {
+  return async (dispatch: Dispatch): Promise<void> => {
+    dispatch({
+      type: PhotosActionType.ADD_PHOTOS,
+      payload: urls,
     });
   };
 }

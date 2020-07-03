@@ -7,12 +7,11 @@ import {
   Theme,
   InputAdornment,
 } from "@material-ui/core";
-import useCreatePosting from "../../hooks/useCreatePosting";
 import MyTextField from "../../components/MyTextField";
-import UploadPhotosField from "./UploadPhotosField";
-import ConditionField from "./ConditionField";
+import ConditionField from "../createPosting/ConditionField";
+import UploadPhotosField from "../createPosting/UploadPhotosField";
+import useEditPosting from "../../hooks/useEditPosting";
 import { postingFormValidationSchema } from "../../common/postingFormValidationSchema";
-import { postingFormInitialValues } from "../../common/postingFormManagement";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,15 +31,16 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function CreatePostingForm(): React.ReactElement {
+export default function EditPostingForm(): React.ReactElement {
   const classes = useStyles();
-  const { handleSubmit } = useCreatePosting();
+  const { initialValues, handleSubmit } = useEditPosting();
 
   return (
     <Formik
-      initialValues={postingFormInitialValues}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={postingFormValidationSchema}
+      enableReinitialize
     >
       {({ isSubmitting }) => (
         <Form noValidate className={classes.form}>
@@ -75,7 +75,7 @@ export default function CreatePostingForm(): React.ReactElement {
             className={classes.submit}
             disabled={isSubmitting}
           >
-            Add
+            Save
           </Button>
         </Form>
       )}

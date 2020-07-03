@@ -18,7 +18,7 @@ export default function EditPostingButton({
 
   return (
     <IconButton aria-label="edit posting" onClick={handleClick}>
-      <Edit />
+      <Edit fontSize="large" />
     </IconButton>
   );
 }

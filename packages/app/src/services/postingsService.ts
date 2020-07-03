@@ -1,4 +1,4 @@
-import { CreatePostingFormFields } from "./../hooks/useCreatePosting";
+import { PostingFormFields } from "./../interfaces";
 import Axios from "axios";
 import { Posting } from "../types";
 
@@ -9,7 +9,7 @@ async function getAll(): Promise<Posting[]> {
   return postings;
 }
 
-async function create(input: CreatePostingFormFields): Promise<Posting> {
+async function create(input: PostingFormFields): Promise<Posting> {
   const { data: posting } = await Axios.post(`${baseUrl}/create`, input, {
     withCredentials: true,
   });
@@ -64,6 +64,16 @@ async function remove(id: string): Promise<boolean> {
   return isDeleted;
 }
 
+async function update(id: string, input: PostingFormFields): Promise<Posting> {
+  const { data: updatedPosting } = await Axios.put<Posting>(
+    `${baseUrl}/${id}/edit`,
+    input,
+    { withCredentials: true },
+  );
+
+  return updatedPosting;
+}
+
 export default {
   getAll,
   create,
@@ -72,4 +82,5 @@ export default {
   getAllFollowedPostings,
   getAllMyPostings,
   remove,
+  update,
 };

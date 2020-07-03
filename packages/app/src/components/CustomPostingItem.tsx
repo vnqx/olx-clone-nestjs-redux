@@ -9,7 +9,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Posting } from "../types";
-import Moment from "react-moment";
+import { getDaysElapsed } from "../utils/getDaysElapsed";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Props {
   posting: Posting;
@@ -20,6 +21,14 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+    },
+    link: {
+      fontWeight: 600,
+      textDecoration: "none",
+      color: "inherit",
+      "&:visited": {
+        color: "inherit",
+      },
     },
     details: {
       display: "flex",
@@ -48,24 +57,33 @@ export default function CustomPostingItem({
   controls,
 }: Props): React.ReactElement {
   const classes = useStyles();
+  const navigate = useNavigate();
+
   return (
     <Card className={classes.root}>
       <CardMedia
         className={classes.cover}
         title={posting.title}
         image={posting.photos[0]}
+        onClick={() => navigate(`/postings/${posting.id}`)}
       />
+
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography variant="h5" component="h5">
-            {posting.title}
+            <Link className={classes.link} to={`/postings/${posting.id}`}>
+              {posting.title}
+            </Link>
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             ${posting.price}
           </Typography>
-          <div>
-            updated <Moment fromNow date={posting.updatedAt} />
-          </div>
+          <Typography variant="body2">
+            Updated{" "}
+            {getDaysElapsed(posting.updatedAt) > 1
+              ? `${getDaysElapsed(posting.updatedAt)} days ago`
+              : "today"}
+          </Typography>
         </CardContent>
         <div className={classes.controls}>{controls}</div>
       </div>
