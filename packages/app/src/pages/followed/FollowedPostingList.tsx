@@ -1,7 +1,8 @@
 import React from "react";
-import FollowedPostingItem from "./FollowedPostingItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import CustomPostingItem from "../../components/CustomPostingItem";
+import FollowButton from "../../components/FollowButton";
 
 export default function FollowedPostingList(): React.ReactElement {
   const followedPostings = useSelector(
@@ -10,7 +11,11 @@ export default function FollowedPostingList(): React.ReactElement {
   return (
     <div>
       {followedPostings.map((posting) => (
-        <FollowedPostingItem posting={posting} key={posting.id} />
+        <CustomPostingItem
+          posting={posting}
+          key={posting.id}
+          controls={<FollowButton id={posting.id} />}
+        />
       ))}
     </div>
   );

@@ -38,12 +38,8 @@ async function followPosting(id: string): Promise<FollowPostingData> {
   return data;
 }
 
-interface FollowedPostingsData {
-  postings: Posting[];
-}
-
-async function getAllFollowedPostings(): Promise<FollowedPostingsData> {
-  const { data: postings } = await Axios.get<FollowedPostingsData>(
+async function getAllFollowedPostings(): Promise<Posting[]> {
+  const { data: postings } = await Axios.get<Posting[]>(
     `http://localhost:4000/account/followed`,
     { withCredentials: true },
   );
@@ -51,17 +47,21 @@ async function getAllFollowedPostings(): Promise<FollowedPostingsData> {
   return postings;
 }
 
-interface MyPostingsData {
-  postings: Posting[];
-}
-
-async function getAllMyPostings(): Promise<MyPostingsData> {
-  const { data: postings } = await Axios.get<MyPostingsData>(
+async function getAllMyPostings(): Promise<Posting[]> {
+  const { data: postings } = await Axios.get<Posting[]>(
     "http://localhost:4000/account/postings",
     { withCredentials: true },
   );
 
   return postings;
+}
+
+async function remove(id: string): Promise<boolean> {
+  const { data: isDeleted } = await Axios.delete<boolean>(`${baseUrl}/${id}`, {
+    withCredentials: true,
+  });
+
+  return isDeleted;
 }
 
 export default {
@@ -71,4 +71,5 @@ export default {
   followPosting,
   getAllFollowedPostings,
   getAllMyPostings,
+  remove,
 };

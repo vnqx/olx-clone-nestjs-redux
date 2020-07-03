@@ -13,6 +13,7 @@ import { RootState } from "./store";
 import Footer from "./components/Footer";
 import Followed from "./pages/Followed";
 import MyPostings from "./pages/account/MyPostings";
+import EditPosting from "./pages/EditPosting";
 
 export default function App(): React.ReactElement {
   const dispatch = useDispatch();
@@ -35,8 +36,11 @@ export default function App(): React.ReactElement {
           <Route path="sign-in" element={<SignIn />} />
           <Route path="sign-up" element={<SignUp />} />
         </Route>
-        <Route path="postings/create" element={<CreatePosting />} />
-        <Route path="postings/:id" element={<FullPosting />} />
+        <Route path="postings">
+          <Route path="create" element={<CreatePosting />} />
+          <Route path=":id" element={<FullPosting />} />
+          <Route path=":id/edit" element={<EditPosting />} />
+        </Route>
         <Route path="account">
           <Route path="followed" element={<Followed />} />
           <Route path="postings" element={<MyPostings />} />

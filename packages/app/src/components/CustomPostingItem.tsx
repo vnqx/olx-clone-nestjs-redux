@@ -1,5 +1,4 @@
 import React from "react";
-import { Posting } from "../../types";
 import {
   makeStyles,
   Theme,
@@ -9,10 +8,12 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
-import FollowButton from "../../components/FollowButton";
+import { Posting } from "../types";
+import Moment from "react-moment";
 
 interface Props {
   posting: Posting;
+  controls: React.ReactElement;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,8 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function FollowedPostingItem({
+export default function CustomPostingItem({
   posting,
+  controls,
 }: Props): React.ReactElement {
   const classes = useStyles();
   return (
@@ -61,12 +63,11 @@ export default function FollowedPostingItem({
           <Typography variant="subtitle1" color="textSecondary">
             ${posting.price}
           </Typography>
-          {/* <LastUpdated updatedAt={posting.updatedAt} /> */}
+          <div>
+            updated <Moment fromNow date={posting.updatedAt} />
+          </div>
         </CardContent>
-        <div className={classes.controls}>
-          {/* <LaunchButton id={posting.id} /> */}
-          <FollowButton id={posting.id} />
-        </div>
+        <div className={classes.controls}>{controls}</div>
       </div>
     </Card>
   );
