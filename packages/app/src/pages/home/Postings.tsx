@@ -13,11 +13,9 @@ export default function Postings(): React.ReactElement {
     dispatch(loadPostings(filter));
   }, [dispatch, filter]);
 
-  const postings = useSelector((state: RootState) => state.postings);
-
   return (
     <Container maxWidth="md">
-      <PostingList postings={postings} />
+      <PostingList />
     </Container>
   );
 }

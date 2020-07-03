@@ -1,5 +1,4 @@
-import { PostingFormFields } from "./../interfaces";
-import { Posting } from "../types";
+import { PostingFormFields, Posting } from "./../interfaces";
 import postingsService from "../services/postingsService";
 import { Dispatch } from "redux";
 

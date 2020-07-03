@@ -14,6 +14,8 @@ import Footer from "./components/Footer";
 import Followed from "./pages/Followed";
 import MyPostings from "./pages/account/MyPostings";
 import EditPosting from "./pages/EditPosting";
+import Chats from "./pages/Chats";
+import FullChat from "./pages/FullChat";
 
 export default function App(): React.ReactElement {
   const dispatch = useDispatch();
@@ -40,11 +42,14 @@ export default function App(): React.ReactElement {
           <Route path="create" element={<CreatePosting />} />
           <Route path=":id" element={<FullPosting />} />
           <Route path=":id/edit" element={<EditPosting />} />
+          <Route path=":id/chat" element={<FullChat />} />
         </Route>
         <Route path="account">
           <Route path="followed" element={<Followed />} />
           <Route path="postings" element={<MyPostings />} />
         </Route>
+
+        <Route path="chats" element={<Chats />} />
       </Routes>
       <Footer />
     </>

@@ -1,13 +1,11 @@
 import React from "react";
 import PostingItem from "./PostingItem";
 import { Grid } from "@material-ui/core";
-import { Posting } from "../../types";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
 
-interface Props {
-  postings: Posting[];
-}
-
-export default function PostingList({ postings }: Props): React.ReactElement {
+export default function PostingList(): React.ReactElement {
+  const postings = useSelector((state: RootState) => state.postings);
   return (
     <Grid container justify="center" spacing={2}>
       {postings.map((posting) => (

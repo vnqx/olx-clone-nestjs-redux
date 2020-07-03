@@ -9,6 +9,8 @@ import fullPostingReducer from "./reducers/fullPostingReducer";
 import followedPostingsReducer from "./reducers/followedPostingsReducer";
 import myPostingsReducer from "./reducers/myPostingsReducer";
 import filterReducer from "./reducers/filterReducer";
+import chatsReducer from "./reducers/chatsReducer";
+import fullChatReducer from "./reducers/fullChatReducer";
 
 const rootReducer = combineReducers({
   me: meReducer,
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
   fullPosting: fullPostingReducer,
   photos: photosReducer,
   filter: filterReducer,
+  chats: chatsReducer,
+  fullChat: fullChatReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

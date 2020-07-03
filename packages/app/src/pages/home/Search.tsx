@@ -22,11 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover": {
         backgroundColor: "#fff",
       },
-      "&$focused": {
+      "&:focus": {
         backgroundColor: "#fff",
         boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
         borderColor: theme.palette.primary.main,
       },
+      marginBottom: theme.spacing(2),
     },
   }),
 );

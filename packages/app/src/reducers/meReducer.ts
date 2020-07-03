@@ -1,6 +1,6 @@
+import { User } from "./../interfaces";
 import { SignUpFormFields } from "../hooks/useSignUpForm";
 import { SignInFormFields } from "../hooks/useSignInForm";
-import { Me } from "../types";
 import authService from "../services/authService";
 import { Dispatch } from "redux";
 
@@ -11,7 +11,7 @@ export enum MeActionType {
 
 export interface LoadMeAction {
   type: typeof MeActionType.LOAD_ME;
-  payload: Me;
+  payload: User;
 }
 
 export interface RemoveMeAction {
@@ -21,7 +21,7 @@ export interface RemoveMeAction {
 
 export type MeAction = LoadMeAction | RemoveMeAction;
 
-export type MeState = Me | null;
+export type MeState = User | null;
 
 export const initialState: MeState = null;
 

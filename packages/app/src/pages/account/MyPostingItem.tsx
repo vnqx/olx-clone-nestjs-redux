@@ -1,8 +1,8 @@
 import React from "react";
 import CustomPostingItem from "../../components/CustomPostingItem";
 import DeletePostingButton from "./DeletePostingButton";
-import { Posting } from "../../types";
 import EditPostingButton from "./EditPostingButton";
+import { Posting } from "../../interfaces";
 
 interface Props {
   posting: Posting;

@@ -1,5 +1,4 @@
 import React from "react";
-import { Posting } from "../../types";
 import {
   Grid,
   Card,
@@ -10,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import FollowButton from "../../components/FollowButton";
+import { Posting } from "../../interfaces";
 
 interface Props {
   posting: Posting;

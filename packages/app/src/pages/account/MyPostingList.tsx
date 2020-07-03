@@ -1,12 +1,11 @@
 import React from "react";
-import { Posting } from "../../types";
 import MyPostingItem from "./MyPostingItem";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
-interface Props {
-  postings: Posting[];
-}
+export default function MyPostingList(): React.ReactElement {
+  const postings = useSelector((state: RootState) => state.myPostings);
 
-export default function MyPostingList({ postings }: Props): React.ReactElement {
   return (
     <div>
       {postings.map((posting) => (

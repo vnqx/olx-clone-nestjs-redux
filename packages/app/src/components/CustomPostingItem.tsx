@@ -8,9 +8,9 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
-import { Posting } from "../types";
 import { getDaysElapsed } from "../utils/getDaysElapsed";
 import { Link, useNavigate } from "react-router-dom";
+import { Posting } from "../interfaces";
 
 interface Props {
   posting: Posting;

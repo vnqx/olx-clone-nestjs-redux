@@ -1,24 +1,27 @@
-import { PostingFormFields } from "./../interfaces";
+import { PostingFormFields, Posting } from "./../interfaces";
 import Axios from "axios";
-import { Posting } from "../types";
 
 const baseUrl = "http://localhost:4000/postings";
 
 async function getAll(): Promise<Posting[]> {
-  const { data: postings } = await Axios.get(baseUrl);
+  const { data: postings } = await Axios.get<Posting[]>(baseUrl);
   return postings;
 }
 
 async function create(input: PostingFormFields): Promise<Posting> {
-  const { data: posting } = await Axios.post(`${baseUrl}/create`, input, {
-    withCredentials: true,
-  });
+  const { data: posting } = await Axios.post<Posting>(
+    `${baseUrl}/create`,
+    input,
+    {
+      withCredentials: true,
+    },
+  );
 
   return posting;
 }
 
 async function getById(id: string): Promise<Posting> {
-  const { data: posting } = await Axios.get(`${baseUrl}/${id}`);
+  const { data: posting } = await Axios.get<Posting>(`${baseUrl}/${id}`);
 
   return posting;
 }

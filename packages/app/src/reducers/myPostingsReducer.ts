@@ -1,6 +1,6 @@
-import { Posting } from "./../types";
 import { Dispatch } from "redux";
 import postingsService from "../services/postingsService";
+import { Posting } from "../interfaces";
 
 export enum MyPostingsActionType {
   LOAD_MY_POSTINGS = "LOAD_MY_POSTINGS",

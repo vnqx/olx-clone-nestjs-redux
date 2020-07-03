@@ -9,3 +9,36 @@ export interface PostingFormFields {
   city: string;
   photos: string[];
 }
+
+export interface Posting {
+  id: string;
+  title: string;
+  price: number;
+  condition: Condition;
+  description: string;
+  phone: number;
+  city: string;
+  photos: string[];
+  updatedAt: Date;
+  createdAt: Date;
+}
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  id: string;
+}
+
+export interface Chat {
+  id: string;
+  users: User[];
+  posting: Posting;
+  messages: Message[];
+}
+
+export interface Message {
+  id: string;
+  user: User;
+  chat: Chat;
+}
