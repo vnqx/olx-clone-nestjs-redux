@@ -13,4 +13,12 @@ export class AccountController {
   getAllFollowedPostings(@Req() req: ReqWithUser): Promise<Posting[]> {
     return this.accountService.getAllFollowedPostings(req.user.id);
   }
+
+  @Get("postings")
+  @UseGuards(JwtAuthGuard)
+  getAllMyPostings(@Req() req: ReqWithUser): Promise<Posting[]> {
+    console.log("ddd");
+
+    return this.accountService.getAllMyPostings(req.user.id);
+  }
 }

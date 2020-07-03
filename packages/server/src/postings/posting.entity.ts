@@ -1,9 +1,12 @@
+import { Condition } from "./../enums";
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import User from "../users/user.entity";
 
@@ -17,6 +20,9 @@ export default class Posting {
 
   @Column()
   price!: number;
+
+  @Column({ type: "enum", enum: Condition })
+  condition!: Condition;
 
   @Column()
   description!: string;
@@ -36,7 +42,17 @@ export default class Posting {
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt!: Date;
 
+  @Column("timestamp", {
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+  })
+  updatedAt!: Date;
+
   @ManyToMany(() => User, (user) => user.followedPostings, { cascade: true })
   @JoinTable()
   followers!: User[];
+
+  @ManyToOne(() => User, (user) => user.myPostings, { cascade: true })
+  @JoinColumn()
+  user!: User;
 }

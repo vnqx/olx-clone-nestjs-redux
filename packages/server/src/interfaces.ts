@@ -1,6 +1,6 @@
-import { Posting } from "./../../app/src/types";
 import User from "./users/user.entity";
 import { Request } from "express";
+import Posting from "./postings/posting.entity";
 
 export interface ReqWithUser extends Request {
   user: User;

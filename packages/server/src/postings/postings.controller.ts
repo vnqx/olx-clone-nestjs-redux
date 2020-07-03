@@ -39,7 +39,10 @@ export default class PostingsController {
 
   @Post("create")
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createPostingDto: CreatePostingDto): Promise<Posting> {
-    return this.postingsService.create(createPostingDto);
+  async create(
+    @Body() createPostingDto: CreatePostingDto,
+    @Req() req: ReqWithUser,
+  ): Promise<Posting> {
+    return this.postingsService.create(createPostingDto, req.user);
   }
 }

@@ -28,9 +28,14 @@ export default class PostingsService {
     return posting;
   }
 
-  async create(createPostingDto: CreatePostingDto): Promise<Posting> {
-    const createdPosting = this.postingsRepository.create(createPostingDto);
-
+  async create(
+    createPostingDto: CreatePostingDto,
+    user: User,
+  ): Promise<Posting> {
+    const createdPosting = this.postingsRepository.create({
+      ...createPostingDto,
+      user,
+    });
     await this.postingsRepository.save(createdPosting);
 
     return createdPosting;
