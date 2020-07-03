@@ -5,7 +5,8 @@ export enum PhotosActionType {
   DELETE_PHOTO = "DELETE_PHOTO",
   ADD_PHOTOS = "ADD_PHOTOS",
   LOAD_PHOTOS = "LOAD_PHOTOS",
-  MOVE_PHOTO = "MOVE_PHOTO",
+  MOVE_PHOTO_LEFT = "MOVE_PHOTO_LEFT",
+  MOVE_PHOTO_RIGHT = "MOVE_PHOTO_RIGHT",
 }
 
 export interface DeletePhotoAction {
@@ -23,8 +24,13 @@ export interface LoadPhotosAction {
   payload: true;
 }
 
-export interface MovePhotoAction {
-  type: PhotosActionType.MOVE_PHOTO;
+export interface MovePhotoLeftAction {
+  type: PhotosActionType.MOVE_PHOTO_LEFT;
+  payload: string;
+}
+
+export interface MovePhotoRightAction {
+  type: PhotosActionType.MOVE_PHOTO_RIGHT;
   payload: string;
 }
 
@@ -32,7 +38,8 @@ export type PhotosAction =
   | DeletePhotoAction
   | AddPhotosAction
   | LoadPhotosAction
-  | MovePhotoAction;
+  | MovePhotoLeftAction
+  | MovePhotoRightAction;
 
 export interface PhotosState {
   urls: string[];
@@ -67,7 +74,7 @@ function photosReducer(
       };
     case PhotosActionType.LOAD_PHOTOS:
       return { ...state, loading: true };
-    case PhotosActionType.MOVE_PHOTO:
+    case PhotosActionType.MOVE_PHOTO_LEFT:
       for (let i = 0; i < state.urls.length; i++) {
         // swap two photos
         if (state.urls[i] === action.payload) {
@@ -76,6 +83,22 @@ function photosReducer(
           // i-1 for i equal to 0 is state.urls.length-1
           [state.urls[i], state.urls[mod(i - 1, state.urls.length)]] = [
             state.urls[mod(i - 1, state.urls.length)],
+            state.urls[i],
+          ];
+          break;
+        }
+      }
+
+      return { ...state };
+    case PhotosActionType.MOVE_PHOTO_RIGHT:
+      for (let i = 0; i < state.urls.length; i++) {
+        // swap two photos
+        if (state.urls[i] === action.payload) {
+          // if it was state.urls[i], state.urls[i+1] it would've been
+          // pushing it forward, needed the mod function so that
+          // i-1 for i equal to 0 is state.urls.length-1
+          [state.urls[i], state.urls[(i + 1) % state.urls.length]] = [
+            state.urls[(i + 1) % state.urls.length],
             state.urls[i],
           ];
           break;
@@ -97,10 +120,19 @@ export function deletePhoto(url: string) {
   };
 }
 
-export function movePhoto(url: string) {
+export function movePhotoLeft(url: string) {
   return async (dispatch: Dispatch): Promise<void> => {
     dispatch({
-      type: PhotosActionType.MOVE_PHOTO,
+      type: PhotosActionType.MOVE_PHOTO_LEFT,
+      payload: url,
+    });
+  };
+}
+
+export function movePhotoRight(url: string) {
+  return async (dispatch: Dispatch): Promise<void> => {
+    dispatch({
+      type: PhotosActionType.MOVE_PHOTO_RIGHT,
       payload: url,
     });
   };

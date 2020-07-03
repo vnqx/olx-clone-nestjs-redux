@@ -9,7 +9,7 @@ import {
 import DeletePhotoButton from "./DeletePhotoButton";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-import SetFrontPhotoButton from "./SetFrontPhotoButton";
+import MovePhotoButtons from "./MovePhotoButtons";
 
 interface Props {
   photoUrls: string[];
@@ -54,8 +54,8 @@ export default function UploadedPhotos(): React.ReactElement {
               className={classes.tileBar}
               actionIcon={
                 <>
+                  <MovePhotoButtons url={url} />
                   <DeletePhotoButton url={url} />
-                  <SetFrontPhotoButton url={url} />
                 </>
               }
             />
