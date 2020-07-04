@@ -88,9 +88,10 @@ export class ChatsService {
 
     const { user: postingOwner, chats: postingChats } = posting;
 
-    const chat = postingChats.find((chat) =>
-      chat.users.map((user) => user.id === userId),
-    );
+    const chat = postingChats.find((chat) => {
+      const userIds = chat.users.map((user) => user.id);
+      return userIds.includes(userId);
+    });
 
     if (chat) {
       const fullChat = await this.chatsRepository.findOne(chat.id, {
@@ -118,9 +119,9 @@ export class ChatsService {
     const createdChat = this.chatsRepository.create({
       posting,
       users: [me, postingOwner],
+      messages: [],
     });
-    const savedChat = await this.chatsRepository.save(createdChat);
 
-    return savedChat;
+    return await this.chatsRepository.save(createdChat);
   }
 }

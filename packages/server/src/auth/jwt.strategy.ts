@@ -1,8 +1,8 @@
-import { UsersService } from "./../users/users.service";
+import { UsersService } from "../users/users.service";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable } from "@nestjs/common";
-import { Strategy, ExtractJwt } from "passport-jwt";
+import { ExtractJwt, Strategy } from "passport-jwt";
 import User from "../users/user.entity";
 import { TokenPayload } from "../interfaces";
 
@@ -15,8 +15,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         function (req) {
-          const tokenWithBearer = req.cookies.token;
-          return tokenWithBearer.replace("Bearer ", "");
+          const tokenWithBearer: string | undefined = req.cookies.token;
+          if (tokenWithBearer) {
+            return tokenWithBearer.replace("Bearer ", "");
+          }
+          return null;
         },
       ]),
       ignoreExpiration: false,

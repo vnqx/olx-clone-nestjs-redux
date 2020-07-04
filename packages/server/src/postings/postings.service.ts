@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import Posting from "./posting.entity";
 import { CreatePostingDto } from "./dto/createPosting.dto";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, Like } from "typeorm";
+import { Repository } from "typeorm";
 import User from "../users/user.entity";
 import { FollowPosting } from "../interfaces";
 

@@ -28,6 +28,8 @@ export class AccountService {
       relations: ["myPostings"],
     });
 
+    console.log(user);
+
     if (!user)
       throw new HttpException(
         "User with this id doesn't exist",

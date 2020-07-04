@@ -19,7 +19,12 @@ export class UsersService {
   }
 
   async getByEmail(email: string): Promise<User> {
-    const user = await this.usersRepository.findOne({ email });
+    const user = await this.usersRepository.findOne({
+      where: { email },
+      // TODO
+      select: ['id', 'firstName', 'lastName', 'email', 'passwordHash']
+    });
+
     if (!user)
       throw new HttpException(
         "User with this email doesn't exist",

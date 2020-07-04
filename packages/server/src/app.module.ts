@@ -24,6 +24,7 @@ import Joi from "@hapi/joi";
         CLOUDINARY_CLOUD_NAME: Joi.string().required(),
         CLOUDINARY_API_KEY: Joi.number().required(),
         CLOUDINARY_API_SECRET: Joi.string().required(),
+        ENDPOINT: Joi.string().required(),
       }),
     }),
     PostingsModule,

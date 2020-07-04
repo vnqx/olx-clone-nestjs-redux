@@ -43,6 +43,7 @@ export class AuthController {
     res.cookie("token", `Bearer ${token}`, {
       httpOnly: true,
     });
+
     return res.sendStatus(200);
   }
 

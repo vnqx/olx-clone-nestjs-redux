@@ -7,7 +7,7 @@ export interface ReqWithUser extends Request {
   user: User;
 }
 
-export interface Token {
+export interface TokenPayload {
   userId: string;
 }
 
