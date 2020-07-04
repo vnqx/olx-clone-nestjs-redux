@@ -1,4 +1,4 @@
-import { Chat } from "./../interfaces";
+import { Chat, Message } from "./../interfaces";
 import Axios from "axios";
 
 const baseUrl = "http://localhost:4000/chats";
@@ -17,9 +17,25 @@ async function getChat(postingId: string): Promise<Chat> {
     { withCredentials: true },
   );
 
-  console.log(chat);
-
   return chat;
 }
 
-export default { getAllChats, getChat };
+interface SendMessageVars {
+  content: string;
+  chatId: string;
+}
+
+async function sendMessage({
+  content,
+  chatId,
+}: SendMessageVars): Promise<Message> {
+  const { data: message } = await Axios.post<Message>(
+    `http://localhost:4000/chats/${chatId}`,
+    { content },
+    { withCredentials: true },
+  );
+
+  return message;
+}
+
+export default { getAllChats, getChat, sendMessage };

@@ -1,9 +1,10 @@
 import { Dispatch } from "redux";
-import { Chat } from "./../interfaces";
+import { Chat, Message } from "./../interfaces";
 import chatsService from "../services/chatsService";
 
 export enum FullChatActionType {
   LOAD_CHAT = "LOAD_CHAT",
+  ADD_MESSAGE = "ADD_MESSAGE",
 }
 
 export interface LoadChatActionType {
@@ -11,7 +12,12 @@ export interface LoadChatActionType {
   payload: Chat;
 }
 
-export type FullChatAction = LoadChatActionType;
+export interface AddMessageAction {
+  type: typeof FullChatActionType.ADD_MESSAGE;
+  payload: Message;
+}
+
+export type FullChatAction = LoadChatActionType | AddMessageAction;
 
 export type FullChatState = Chat | null;
 
@@ -24,6 +30,10 @@ export default function fullChatReducer(
   switch (action.type) {
     case FullChatActionType.LOAD_CHAT:
       return action.payload;
+    case FullChatActionType.ADD_MESSAGE:
+      return state
+        ? { ...state, messages: state?.messages.concat(action.payload) }
+        : state;
     default:
       return state;
   }
@@ -36,6 +46,22 @@ export function loadFullChat(postingId: string) {
     dispatch({
       type: FullChatActionType.LOAD_CHAT,
       payload: chat,
+    });
+  };
+}
+
+interface SendMessageVars {
+  content: string;
+  chatId: string;
+}
+
+export function sendMessage({ content, chatId }: SendMessageVars) {
+  return async (dispatch: Dispatch): Promise<void> => {
+    const message = await chatsService.sendMessage({ content, chatId });
+
+    dispatch({
+      type: FullChatActionType.ADD_MESSAGE,
+      payload: message,
     });
   };
 }

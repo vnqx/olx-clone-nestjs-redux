@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { loadFullChat } from "../reducers/fullChatReducer";
+import MessageList from "./fullChat/MessageList";
+import CreateMessageForm from "./fullChat/CreateMessageForm";
 
 export default function FullChat(): React.ReactElement {
   const { id } = useParams();
   const dispatch = useDispatch();
-  console.log(id);
 
   useEffect(() => {
     dispatch(loadFullChat(id));
@@ -16,5 +17,11 @@ export default function FullChat(): React.ReactElement {
   const chat = useSelector((state: RootState) => state.fullChat);
 
   if (!chat) return <div>loading...</div>;
-  return <div>{chat.id}</div>;
+
+  return (
+    <div>
+      <MessageList messages={chat.messages} />
+      <CreateMessageForm chatId={chat.id} />
+    </div>
+  );
 }

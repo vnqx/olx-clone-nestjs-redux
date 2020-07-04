@@ -39,6 +39,7 @@ export interface Chat {
 
 export interface Message {
   id: string;
+  content: string;
   user: User;
   chat: Chat;
 }
