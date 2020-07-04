@@ -3,7 +3,7 @@ import {
   JoinColumn,
   Entity,
   PrimaryGeneratedColumn,
-  OneToMany,
+  Column,
 } from "typeorm";
 import Chat from "../chats/chat.entity";
 import User from "../users/user.entity";
@@ -13,11 +13,14 @@ export default class Message {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @OneToMany(() => Chat, (chat) => chat.messages, { cascade: true })
+  @ManyToOne(() => Chat, (chat) => chat.messages, { cascade: true })
   @JoinColumn()
   chat!: Chat;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn()
   user!: User;
+
+  @Column()
+  content!: string;
 }
