@@ -1,11 +1,10 @@
 import { PublicUser } from "./../types";
-import { SignUpDto } from "./dto/signUp.dto";
+import { SignUpInput } from "./input/SignUpInput";
 import { AuthService } from "./auth.service";
 import {
   Controller,
   Post,
   Body,
-  HttpCode,
   UseGuards,
   Req,
   Res,
@@ -22,40 +21,40 @@ export class AuthController {
 
   @Post("sign-up")
   async signUp(
-    @Body() signUpDto: SignUpDto,
+    @Body() input: SignUpInput,
     @Res() res: Response,
-  ): Promise<Response<PublicUser>> {
-    const user = await this.authService.signUp(signUpDto);
-    const cookie = this.authService.getCookieWithJwtToken(user.id);
-    res.setHeader("Set-Cookie", cookie);
-    return res.send(user);
+  ): Promise<Response> {
+    const user = await this.authService.signUp(input);
+    const token = this.authService.generateToken({ userId: user.id });
+    res.cookie("token", `Bearer ${token}`, {
+      httpOnly: true,
+    });
+
+    return res.sendStatus(200);
   }
 
-  @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post("sign-in")
   async signIn(
     @Req() req: ReqWithUser,
     @Res() res: Response,
-  ): Promise<Response<PublicUser>> {
-    const { user } = req;
-    const cookie = this.authService.getCookieWithJwtToken(user.id);
-    res.setHeader("Set-Cookie", cookie);
-    return res.send(user);
+  ): Promise<Response> {
+    const token = this.authService.generateToken({ userId: req.user.id });
+    res.cookie("token", `Bearer ${token}`, {
+      httpOnly: true,
+    });
+    return res.sendStatus(200);
   }
 
   @Post("sign-out")
   signOut(@Res() res: Response): Response {
-    res.setHeader("Set-Cookie", this.authService.getCookieForSignOut());
+    res.clearCookie("token");
     return res.sendStatus(200);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
   getMe(@Req() req: ReqWithUser): PublicUser {
-    const { user } = req;
-    delete user.passwordHash;
-
-    return user;
+    return req.user;
   }
 }

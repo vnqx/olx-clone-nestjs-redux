@@ -1,13 +1,18 @@
 import { ConfigService } from "@nestjs/config";
-import { PublicUser } from "./../types";
-import { SignUpDto } from "./dto/signUp.dto";
-import bcrypt from "bcrypt";
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { PublicUser } from "../types";
+import { SignUpInput } from "./input/SignUpInput";
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { PostgresErrorCode } from "../enums";
-import { SignInDto } from "./dto/signIn.dto";
-import { Token } from "../interfaces";
+import { SignInInput } from "./input/SignInInput";
 import { JwtService } from "@nestjs/jwt";
 import { UsersService } from "../users/users.service";
+import * as bcryptjs from "bcryptjs";
+import {TokenPayload} from "../interfaces";
 
 @Injectable()
 export class AuthService {
@@ -17,14 +22,14 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async signUp(signUpDto: SignUpDto): Promise<PublicUser> {
-    const { password, ...userData } = signUpDto;
+  async signUp(input: SignUpInput): Promise<PublicUser> {
+    const { password, ...publicUser } = input;
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcryptjs.hash(password, 10);
 
     try {
       const createdUser = await this.usersService.create({
-        ...userData,
+        ...publicUser,
         passwordHash,
       });
 
@@ -43,33 +48,19 @@ export class AuthService {
     }
   }
 
-  async signIn(signInDto: SignInDto): Promise<PublicUser> {
-    try {
-      const user = await this.usersService.getByEmail(signInDto.email);
-      await this.verifyPassword(signInDto.password, user.passwordHash);
-      delete user.passwordHash;
-      return user;
-    } catch (error) {
-      throw new HttpException("Wrong credentials", HttpStatus.BAD_REQUEST);
-    }
+  async validateUser(email: string, password: string): Promise<PublicUser> {
+    const user = await this.usersService.getByEmail(email);
+    const isPasswordValid = await bcryptjs.compare(
+      password,
+      user.passwordHash,
+    );
+    if (!isPasswordValid) throw new UnauthorizedException();
+
+    delete user.passwordHash
+    return user
   }
 
-  private async verifyPassword(password: string, passwordHash: string) {
-    const isPasswordValid = await bcrypt.compare(password, passwordHash);
-    if (!isPasswordValid)
-      throw new HttpException("Wrong credentials", HttpStatus.BAD_REQUEST);
-  }
-
-  getCookieWithJwtToken(userId: string): string {
-    const payload: Token = { userId };
-    const token = this.jwtService.sign(payload);
-
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      "JWT_EXPIRES_IN",
-    )}`;
-  }
-
-  getCookieForSignOut(): string {
-    return "Authentication=; HttpOnly; Path=/; Max-Age=0";
+  generateToken(payload: TokenPayload): string {
+    return this.jwtService.sign(payload)
   }
 }
