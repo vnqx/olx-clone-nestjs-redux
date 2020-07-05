@@ -24,7 +24,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
         database:
           process.env.RDS_DB_NAME ||
           (configService.get("POSTGRES_DB") as string),
-        entities: [__dirname + "/../**/*.entity.{js,ts}"],
+        entities: [__dirname + "/../**/*.entity.js"],
         synchronize: (process.env.TYPEORM_SYNC ||
           configService.get("SYNCHRONIZE")) as boolean,
       }),

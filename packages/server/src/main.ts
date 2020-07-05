@@ -7,10 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
-  const corsOptions = { credentials: true, origin: "http://localhost:3000" };
-  if (process.env.NODE_ENV === "production") {
-    corsOptions.origin = configService.get("ENDPOINT") as string;
-  }
+  const corsOptions = {
+    credentials: true,
+    origin: "http://olx-clone-nestjs.s3-website.eu-central-1.amazonaws.com",
+  };
+
   app.enableCors(corsOptions);
   app.use(cookieParser());
 
