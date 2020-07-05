@@ -62,7 +62,6 @@ export default class PostingsService {
     await this.postingsRepository.update(posting.id, createPostingDto);
 
     const updatedPosting = await this.postingsRepository.findOne(id);
-    console.log(updatedPosting);
 
     if (!updatedPosting)
       throw new HttpException(

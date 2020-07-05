@@ -12,6 +12,7 @@ import {
 } from "typeorm";
 import User from "../users/user.entity";
 import Chat from "../chats/chat.entity";
+import { IsNumber, IsPositive, IsString, Length } from "class-validator";
 
 @Entity()
 export default class Posting {
@@ -19,21 +20,30 @@ export default class Posting {
   id!: string;
 
   @Column()
+  @IsString()
+  @Length(2, 15)
   title!: string;
 
   @Column()
+  @IsNumber()
+  @IsPositive()
   price!: number;
 
   @Column({ type: "enum", enum: Condition })
   condition!: Condition;
 
   @Column()
+  @IsString()
+  @Length(10, 500)
   description!: string;
 
   @Column()
+  @IsNumber()
+  @Length(2, 20)
   phone!: number;
 
   @Column()
+  @Length(2, 15)
   city!: string;
 
   @Column({

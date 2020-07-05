@@ -8,14 +8,25 @@ import { TypeOrmModule } from "@nestjs/typeorm";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        type: "postgres",
-        host: configService.get("POSTGRES_HOST"),
-        port: configService.get("POSTGRES_PORT"),
-        username: configService.get("POSTGRES_USER"),
-        password: configService.get("POSTGRES_PASSWORD"),
-        database: configService.get("POSTGRES_DB"),
-        entities: [__dirname + "/../**/*.entity.ts"],
-        synchronize: true,
+        type: "postgres" as any,
+        host:
+          process.env.RDS_HOSTNAME ||
+          (configService.get("POSTGRES_HOST") as string),
+        port:
+          process.env.RDS_PORT ||
+          (configService.get("POSTGRES_PORT") as number),
+        username:
+          process.env.RDS_USERNAME ||
+          (configService.get("POSTGRES_USER") as string),
+        password:
+          process.env.RDS_PASSWORD ||
+          (configService.get("POSTGRES_PASSWORD") as string),
+        database:
+          process.env.RDS_DB_NAME ||
+          (configService.get("POSTGRES_DB") as string),
+        entities: [__dirname + "/../**/*.entity.{js,ts}"],
+        synchronize: (process.env.TYPEORM_SYNC ||
+          configService.get("SYNCHRONIZE")) as boolean,
       }),
     }),
   ],

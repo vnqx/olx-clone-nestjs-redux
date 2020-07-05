@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import Posting from "../postings/posting.entity";
 import Chat from "../chats/chat.entity";
+import { IsEmail, Length } from "class-validator";
 
 @Entity()
 export default class User {
@@ -14,11 +15,14 @@ export default class User {
   id!: string;
 
   @Column()
+  @Length(2, 20)
   firstName!: string;
 
   @Column()
+  @Length(2, 20)
   lastName!: string;
 
+  @IsEmail()
   @Column({ unique: true })
   email!: string;
 

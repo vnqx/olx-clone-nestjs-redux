@@ -15,7 +15,9 @@ async function bootstrap() {
   app.use(cookieParser());
 
   // app.use(morgan("combined"));
-  await app.listen(4000);
+  const port = process.env.PORT || (configService.get("PORT") as number);
+
+  await app.listen(port);
 }
 
 bootstrap();
