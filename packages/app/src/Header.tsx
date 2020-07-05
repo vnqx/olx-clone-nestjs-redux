@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SignOutButton from "./components/header/SignOutButton";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./store";
@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import NavLink from "./components/header/NavLink";
 import { resetFilter } from "./reducers/filterReducer";
+import Search from "./pages/home/Search";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,6 +37,7 @@ export default function Header(): React.ReactElement {
   const dispatch = useDispatch();
   const classes = useStyles();
   const me = useSelector((state: RootState) => state.me);
+  const location = useLocation();
 
   return (
     <div className={classes.root}>
@@ -71,6 +73,7 @@ export default function Header(): React.ReactElement {
           </Link>
         </Toolbar>
       </AppBar>
+      {location.pathname === "/" && <Search />}
     </div>
   );
 }

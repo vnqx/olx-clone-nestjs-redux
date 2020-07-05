@@ -1,4 +1,4 @@
-import { User } from "./../interfaces";
+import { User } from "../interfaces";
 import { SignUpFormFields } from "../hooks/useSignUpForm";
 import { SignInFormFields } from "../hooks/useSignInForm";
 import authService from "../services/authService";
@@ -6,6 +6,7 @@ import { Dispatch } from "redux";
 
 export enum MeActionType {
   LOAD_ME = "LOAD_ME",
+  LOADING_ME = "LOADING_ME",
   REMOVE_ME = "REMOVE_ME",
 }
 
@@ -21,7 +22,7 @@ export interface RemoveMeAction {
 
 export type MeAction = LoadMeAction | RemoveMeAction;
 
-export type MeState = User | null | "";
+export type MeState = User | null;
 
 export const initialState: MeState = null;
 

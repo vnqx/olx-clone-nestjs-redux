@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
         boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
         borderColor: theme.palette.primary.main,
       },
-      marginBottom: theme.spacing(2),
+      // marginBottom: theme.spacing(2),
     },
   }),
 );

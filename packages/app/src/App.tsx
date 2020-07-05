@@ -16,10 +16,20 @@ import MyPostings from "./pages/account/MyPostings";
 import EditPosting from "./pages/EditPosting";
 import Chats from "./pages/Chats";
 import FullChat from "./pages/FullChat";
+import { Container, createStyles, makeStyles, Theme } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      paddingTop: theme.spacing(4),
+    },
+  }),
+);
 
 export default function App(): React.ReactElement | null {
   const dispatch = useDispatch();
   const me = useSelector((state: RootState) => state.me);
+  const classes = useStyles();
 
   useEffect(() => {
     if (me) {
@@ -29,30 +39,36 @@ export default function App(): React.ReactElement | null {
     }
   }, [dispatch, me]);
 
-  if (me === null) return null;
-
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="auth">
-          <Route path="sign-in" element={<SignIn />} />
-          <Route path="sign-up" element={<SignUp />} />
-        </Route>
-        <Route path="postings">
-          <Route path="create" element={<CreatePosting />} />
-          <Route path=":id" element={<FullPosting />} />
-          <Route path=":id/edit" element={<EditPosting />} />
-          <Route path=":id/chat" element={<FullChat />} />
-        </Route>
-        <Route path="account">
-          <Route path="followed" element={<Followed />} />
-          <Route path="postings" element={<MyPostings />} />
-        </Route>
+      <Container maxWidth="md" component="main" className={classes.container}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="auth">
+            <Route path="sign-in" element={<SignIn />} />
+            <Route path="sign-up" element={<SignUp />} />
+          </Route>
+          <Route path="postings/:id" element={<FullPosting />} />
+          {me ? (
+            <>
+              <Route path="postings">
+                <Route path="create" element={<CreatePosting />} />
+                <Route path=":id/edit" element={<EditPosting />} />
+                <Route path=":id/chat" element={<FullChat />} />
+              </Route>
+              <Route path="account">
+                <Route path="followed" element={<Followed />} />
+                <Route path="postings" element={<MyPostings />} />
+              </Route>
 
-        <Route path="chats" element={<Chats />} />
-      </Routes>
+              <Route path="chats" element={<Chats />} />
+            </>
+          ) : (
+            <Route path="*" element={<SignIn />} />
+          )}
+        </Routes>
+      </Container>
       <Footer />
     </>
   );

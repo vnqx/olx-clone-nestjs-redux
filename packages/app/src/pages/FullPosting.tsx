@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
@@ -22,7 +22,10 @@ import PhonePopover from "./fullPosting/PhonePopover";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
+    link: {
+      textDecoration: "none",
+      color: "inherit",
+    },
     media: {
       height: 0,
       paddingTop: "56.25%", // 16:9
@@ -68,6 +71,7 @@ export default function FullPosting(): React.ReactElement {
   const classes = useStyles();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(loadFullPosting(id));
@@ -77,7 +81,7 @@ export default function FullPosting(): React.ReactElement {
 
   // in case there's loaded some posting in the store already
   // not to display the old one
-  if (posting?.id !== id) return <div>ooasodasodasodasodo</div>;
+  if (posting?.id !== id) return <div>loading...</div>;
 
   return (
     <Container component="main" maxWidth="sm">
@@ -108,7 +112,11 @@ export default function FullPosting(): React.ReactElement {
             <PhonePopover phone={posting.phone} />
           </div>
           <div className={classes.message}>
-            <Button variant="outlined" color="primary">
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => navigate(`/postings/${posting.id}/chat`)}
+            >
               Send message
             </Button>
           </div>

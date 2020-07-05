@@ -5,16 +5,12 @@ import Axios from "axios";
 
 const baseUrl = "http://localhost:4000/auth";
 
-async function getMe(): Promise<User | ""> {
-  try {
-    const { data: me } = await Axios.get<User>(baseUrl, {
-      withCredentials: true,
-    });
+async function getMe(): Promise<User> {
+  const { data: me } = await Axios.get<User>(baseUrl, {
+    withCredentials: true,
+  });
 
-    return me;
-  } catch {
-    return "";
-  }
+  return me;
 }
 
 async function signIn(input: SignInFormFields): Promise<User> {
