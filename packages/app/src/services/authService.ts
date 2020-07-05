@@ -2,11 +2,10 @@ import { User } from "./../interfaces";
 import { SignUpFormFields } from "./../hooks/useSignUpForm";
 import { SignInFormFields } from "./../hooks/useSignInForm";
 import Axios from "axios";
-
-const baseUrl = "http://localhost:4000/auth";
+import { BASE_URL } from "../common/constants";
 
 async function getMe(): Promise<User> {
-  const { data: me } = await Axios.get<User>(baseUrl, {
+  const { data: me } = await Axios.get<User>(`${BASE_URL}/auth`, {
     withCredentials: true,
   });
 
@@ -14,24 +13,32 @@ async function getMe(): Promise<User> {
 }
 
 async function signIn(input: SignInFormFields): Promise<User> {
-  const { data: me } = await Axios.post<User>(`${baseUrl}/sign-in`, input, {
-    withCredentials: true,
-  });
+  const { data: me } = await Axios.post<User>(
+    `${BASE_URL}/auth/sign-in`,
+    input,
+    {
+      withCredentials: true,
+    },
+  );
 
   return me;
 }
 
 async function signUp(input: SignUpFormFields): Promise<User> {
-  const { data: me } = await Axios.post<User>(`${baseUrl}/sign-up`, input, {
-    withCredentials: true,
-  });
+  const { data: me } = await Axios.post<User>(
+    `${BASE_URL}/auth/sign-up`,
+    input,
+    {
+      withCredentials: true,
+    },
+  );
 
   return me;
 }
 
 async function signOut(): Promise<void> {
   await Axios.post<"OK">(
-    `${baseUrl}/sign-out`,
+    `${BASE_URL}/auth/sign-out`,
     {},
     {
       withCredentials: true,

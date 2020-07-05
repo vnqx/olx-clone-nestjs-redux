@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2017",
     "module": "commonjs",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "strict": true,
@@ -20,6 +20,7 @@
     "noImplicitAny": true,
     "types": ["node"],
     "jsx": "react",
-    "noEmit": true
+    "noEmit": true,
+    "incremental": true
   }
 }

@@ -5,6 +5,7 @@ import { Posting } from "../interfaces";
 export enum MyPostingsActionType {
   LOAD_MY_POSTINGS = "LOAD_MY_POSTINGS",
   DELETE_MY_POSTING = "DELETE_MY_POSTING",
+  ADD_MY_POSTING = "ADD_MY_POSTING",
 }
 
 export type MyPostingsState = Posting[];
@@ -19,7 +20,15 @@ export interface DeleteMyPostingAction {
   payload: string;
 }
 
-export type MyPostingsAction = LoadMyPostingsAction | DeleteMyPostingAction;
+export interface AddMyPostingAction {
+  type: typeof MyPostingsActionType.ADD_MY_POSTING;
+  payload: Posting;
+}
+
+export type MyPostingsAction =
+  | LoadMyPostingsAction
+  | DeleteMyPostingAction
+  | AddMyPostingAction;
 
 export const initialState: MyPostingsState = [];
 
@@ -32,6 +41,8 @@ export default function myPostingsReducer(
       return action.payload;
     case MyPostingsActionType.DELETE_MY_POSTING:
       return state.filter((posting) => posting.id !== action.payload);
+    case MyPostingsActionType.ADD_MY_POSTING:
+      return state.concat(action.payload);
     default:
       return state;
   }

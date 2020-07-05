@@ -33,8 +33,8 @@ export default function useSignUpForm(): UseSignUpForm {
   const numericRegex = /(?=.*[0-9])/;
 
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().min(2).max(20),
-    lastName: Yup.string().min(2).max(20),
+    firstName: Yup.string().min(2).max(20).required("First name is required"),
+    lastName: Yup.string().min(2).max(20).required("Last name is required"),
     email: Yup.string().email().required(),
     password: Yup.string()
       .matches(lowercaseRegex, "One lowercase required")

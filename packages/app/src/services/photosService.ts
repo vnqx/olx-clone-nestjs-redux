@@ -1,5 +1,5 @@
 import Axios from "axios";
-const baseUrl = "http://localhost:4000/upload";
+import { BASE_URL } from "../common/constants";
 
 async function uploadPhotos(photos: FileList): Promise<string[]> {
   const formData = new FormData();
@@ -7,12 +7,16 @@ async function uploadPhotos(photos: FileList): Promise<string[]> {
     formData.append("photos", photo);
   });
 
-  const { data: photoUrls } = await Axios.post<string[]>(baseUrl, formData, {
-    withCredentials: true,
-    headers: {
-      "Content-Type": "multipart/form-data",
+  const { data: photoUrls } = await Axios.post<string[]>(
+    `${BASE_URL}/upload`,
+    formData,
+    {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     },
-  });
+  );
 
   return photoUrls;
 }

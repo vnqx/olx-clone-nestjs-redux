@@ -1,10 +1,9 @@
 import { ChatPreview, Message } from "./../interfaces";
 import Axios from "axios";
-
-const baseUrl = "http://localhost:4000/chats";
+import { BASE_URL } from "../common/constants";
 
 async function getAllChats(): Promise<ChatPreview[]> {
-  const { data: chats } = await Axios.get<ChatPreview[]>(baseUrl, {
+  const { data: chats } = await Axios.get<ChatPreview[]>(`${BASE_URL}/chats`, {
     withCredentials: true,
   });
 
@@ -13,7 +12,7 @@ async function getAllChats(): Promise<ChatPreview[]> {
 
 async function getChat(postingId: string): Promise<ChatPreview> {
   const { data: chat } = await Axios.get<ChatPreview>(
-    `http://localhost:4000/postings/${postingId}/chat`,
+    `${BASE_URL}/postings/${postingId}/chat`,
     { withCredentials: true },
   );
 
@@ -30,7 +29,7 @@ async function sendMessage({
   chatId,
 }: SendMessageVars): Promise<Message> {
   const { data: message } = await Axios.post<Message>(
-    `http://localhost:4000/chats/${chatId}`,
+    `${BASE_URL}/chats/${chatId}`,
     { content },
     { withCredentials: true },
   );

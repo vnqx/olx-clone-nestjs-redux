@@ -1,6 +1,7 @@
 import { PostingFormFields, Posting } from "./../interfaces";
 import postingsService from "../services/postingsService";
 import { Dispatch } from "redux";
+import { MyPostingsActionType } from "./myPostingsReducer";
 
 export enum FullPostingActionType {
   LOAD_FULL_POSTING = "LOAD_FULL_POSTING",
@@ -50,6 +51,11 @@ export function createPosting(
     const posting = await postingsService.create(input);
     dispatch({
       type: FullPostingActionType.LOAD_FULL_POSTING,
+      payload: posting,
+    });
+
+    dispatch({
+      type: MyPostingsActionType.ADD_MY_POSTING,
       payload: posting,
     });
 

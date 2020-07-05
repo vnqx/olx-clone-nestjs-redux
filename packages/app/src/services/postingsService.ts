@@ -1,16 +1,15 @@
 import { PostingFormFields, Posting } from "./../interfaces";
 import Axios from "axios";
-
-const baseUrl = "http://localhost:4000/postings";
+import { BASE_URL } from "../common/constants";
 
 async function getAll(): Promise<Posting[]> {
-  const { data: postings } = await Axios.get<Posting[]>(baseUrl);
+  const { data: postings } = await Axios.get<Posting[]>(`${BASE_URL}/postings`);
   return postings;
 }
 
 async function create(input: PostingFormFields): Promise<Posting> {
   const { data: posting } = await Axios.post<Posting>(
-    `${baseUrl}/create`,
+    `${BASE_URL}/postings/create`,
     input,
     {
       withCredentials: true,
@@ -21,7 +20,9 @@ async function create(input: PostingFormFields): Promise<Posting> {
 }
 
 async function getById(id: string): Promise<Posting> {
-  const { data: posting } = await Axios.get<Posting>(`${baseUrl}/${id}`);
+  const { data: posting } = await Axios.get<Posting>(
+    `${BASE_URL}/postings/${id}`,
+  );
 
   return posting;
 }
@@ -33,7 +34,7 @@ interface FollowPostingData {
 
 async function followPosting(id: string): Promise<FollowPostingData> {
   const { data } = await Axios.patch<FollowPostingData>(
-    `${baseUrl}/${id}/follow`,
+    `${BASE_URL}/postings/${id}/follow`,
     {},
     { withCredentials: true },
   );
@@ -43,7 +44,7 @@ async function followPosting(id: string): Promise<FollowPostingData> {
 
 async function getAllFollowedPostings(): Promise<Posting[]> {
   const { data: postings } = await Axios.get<Posting[]>(
-    `http://localhost:4000/account/followed`,
+    `${BASE_URL}/account/followed`,
     { withCredentials: true },
   );
 
@@ -52,7 +53,7 @@ async function getAllFollowedPostings(): Promise<Posting[]> {
 
 async function getAllMyPostings(): Promise<Posting[]> {
   const { data: postings } = await Axios.get<Posting[]>(
-    "http://localhost:4000/account/postings",
+    `${BASE_URL}/account/postings`,
     { withCredentials: true },
   );
 
@@ -60,16 +61,19 @@ async function getAllMyPostings(): Promise<Posting[]> {
 }
 
 async function remove(id: string): Promise<boolean> {
-  const { data: isDeleted } = await Axios.delete<boolean>(`${baseUrl}/${id}`, {
-    withCredentials: true,
-  });
+  const { data: isDeleted } = await Axios.delete<boolean>(
+    `${BASE_URL}/postings/${id}`,
+    {
+      withCredentials: true,
+    },
+  );
 
   return isDeleted;
 }
 
 async function update(id: string, input: PostingFormFields): Promise<Posting> {
   const { data: updatedPosting } = await Axios.put<Posting>(
-    `${baseUrl}/${id}/edit`,
+    `${BASE_URL}/postings/${id}/edit`,
     input,
     { withCredentials: true },
   );
@@ -79,7 +83,7 @@ async function update(id: string, input: PostingFormFields): Promise<Posting> {
 
 async function getByTitle(filter: string): Promise<Posting[]> {
   const { data: postings } = await Axios.get<Posting[]>(
-    `${baseUrl}/search/${filter}`,
+    `${BASE_URL}/postings/search/${filter}`,
   );
 
   return postings;
