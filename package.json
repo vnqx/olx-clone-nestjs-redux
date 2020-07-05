@@ -8,8 +8,7 @@
     "app": "yarn workspace app start",
     "server:dev": "yarn workspace server dev",
     "dev": "concurrently --kill-others-on-fail \"yarn app\" \"yarn server:dev\"",
-    "deploy:full": "git add . && git commit -m deploy && git push heroku master",
-    "server:start": "cd packages/server && node dist/main.js"
+    "server:prod": "cd packages/server && npm run prestart:prod && npm run start"
   },
   "license": "MIT",
   "devDependencies": {
