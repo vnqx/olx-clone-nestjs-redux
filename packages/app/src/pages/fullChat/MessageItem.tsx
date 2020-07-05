@@ -7,6 +7,7 @@ import {
   ListItemText,
   Typography,
   ListItemAvatar,
+  Divider,
 } from "@material-ui/core";
 import { Message, Posting } from "../../interfaces";
 import { RootState } from "../../store";
@@ -28,19 +29,22 @@ export default function MessageItem({ message }: Props): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <ListItem key={message.id}>
-      <ListItemAvatar>
-        <Avatar />
-      </ListItemAvatar>
-      <ListItemText
-        className={classes.wrap}
-        primary={
-          <Typography variant="body1">{`${message.user.firstName} ${message.user.lastName}`}</Typography>
-        }
-        secondary={
-          <Typography variant="subtitle1">{message.content}</Typography>
-        }
-      />
-    </ListItem>
+    <>
+      <Divider />
+      <ListItem key={message.id}>
+        <ListItemAvatar>
+          <Avatar />
+        </ListItemAvatar>
+        <ListItemText
+          className={classes.wrap}
+          primary={
+            <Typography variant="body1">{`${message.user.firstName} ${message.user.lastName}`}</Typography>
+          }
+          secondary={
+            <Typography variant="subtitle1">{message.content}</Typography>
+          }
+        />
+      </ListItem>
+    </>
   );
 }

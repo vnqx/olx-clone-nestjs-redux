@@ -39,7 +39,6 @@ const useStyles = makeStyles(() =>
 export default function UploadedPhotos(): React.ReactElement {
   const classes = useStyles();
   const photoUrls = useSelector((state: RootState) => state.photos.urls);
-
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>

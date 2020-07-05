@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "./store";
+import { RootState } from "../store";
 import {
   Avatar,
   createStyles,
@@ -11,16 +11,16 @@ import {
   Theme,
   IconButton,
 } from "@material-ui/core";
-import NavLink from "./components/header/NavLink";
-import { resetFilter } from "./reducers/filterReducer";
-import Search from "./pages/home/Search";
+import { resetFilter } from "../reducers/filterReducer";
+import Search from "../pages/home/Search";
 import HomeIcon from "@material-ui/icons/Home";
 import AddIcon from "@material-ui/icons/Add";
 import StarIcon from "@material-ui/icons/Star";
 import ChatIcon from "@material-ui/icons/Chat";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { signOut } from "./reducers/meReducer";
+import { signOut } from "../reducers/meReducer";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import NavLink from "./NavLink";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

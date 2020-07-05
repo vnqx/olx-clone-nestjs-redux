@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import Header from "./Header";
+import Header from "./components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { loadMe } from "./reducers/meReducer";
 import FullPosting from "./pages/FullPosting";

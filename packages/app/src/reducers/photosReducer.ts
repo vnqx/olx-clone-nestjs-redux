@@ -7,11 +7,16 @@ export enum PhotosActionType {
   PHOTOS_LOADING = "LOAD_PHOTOS",
   MOVE_PHOTO_LEFT = "MOVE_PHOTO_LEFT",
   MOVE_PHOTO_RIGHT = "MOVE_PHOTO_RIGHT",
+  RESET_PHOTOS = "RESET_PHOTOS",
 }
 
 export interface DeletePhotoAction {
   type: PhotosActionType.DELETE_PHOTO;
   payload: string;
+}
+
+export interface ResetPhotosAction {
+  type: PhotosActionType.RESET_PHOTOS;
 }
 
 export interface AddPhotosAction {
@@ -39,7 +44,8 @@ export type PhotosAction =
   | AddPhotosAction
   | LoadPhotosAction
   | MovePhotoLeftAction
-  | MovePhotoRightAction;
+  | MovePhotoRightAction
+  | ResetPhotosAction;
 
 export interface PhotosState {
   urls: string[];
@@ -69,9 +75,16 @@ function photosReducer(
     case PhotosActionType.ADD_PHOTOS:
       return {
         ...state,
-        urls: state.urls.concat(action.payload),
+        // urls: state.urls.concat(action.payload),
+        // loading: false,
+        urls: state.urls.concat(
+          // remove duplicate photos
+          action.payload.filter((newPhoto) => !state.urls.includes(newPhoto)),
+        ),
         loading: false,
       };
+    case PhotosActionType.RESET_PHOTOS:
+      return initialState;
     case PhotosActionType.PHOTOS_LOADING:
       return { ...state, loading: true };
     case PhotosActionType.MOVE_PHOTO_LEFT:
@@ -153,6 +166,19 @@ export function uploadPhotos(photos: FileList) {
 
 export function addPhotos(urls: string[]) {
   return async (dispatch: Dispatch): Promise<void> => {
+    dispatch({
+      type: PhotosActionType.ADD_PHOTOS,
+      payload: urls,
+    });
+  };
+}
+
+export function loadPhotos(urls: string[]) {
+  return async (dispatch: Dispatch): Promise<void> => {
+    dispatch({
+      type: PhotosActionType.RESET_PHOTOS,
+    });
+
     dispatch({
       type: PhotosActionType.ADD_PHOTOS,
       payload: urls,
