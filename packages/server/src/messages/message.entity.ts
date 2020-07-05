@@ -23,4 +23,7 @@ export default class Message {
 
   @Column()
   content!: string;
+
+  @Column({ default: () => "CURRENT_TIMESTAMP(6)" })
+  sentTime!: Date;
 }

@@ -9,6 +9,7 @@ export interface ReqWithUser extends Request {
 
 export interface TokenPayload {
   userId: string;
+  email: string;
 }
 
 export interface FollowPosting {

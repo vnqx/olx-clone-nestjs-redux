@@ -86,7 +86,7 @@ export default class PostingsService {
     return createdPosting;
   }
 
-  async delete(postingId: string, user: User): Promise<boolean> {
+  async delete(postingId: string, meId: string): Promise<boolean> {
     const posting = await this.postingsRepository.findOne(postingId, {
       relations: ["user"],
     });
@@ -97,7 +97,7 @@ export default class PostingsService {
         HttpStatus.NOT_FOUND,
       );
 
-    if (posting.user.id !== user.id)
+    if (posting.user.id !== meId)
       throw new HttpException(
         "You can delete your own postings only",
         HttpStatus.FORBIDDEN,

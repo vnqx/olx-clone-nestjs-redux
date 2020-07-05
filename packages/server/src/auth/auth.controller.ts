@@ -1,4 +1,4 @@
-import { PublicUser } from "./../types";
+import { PublicUser } from "../types";
 import { SignUpInput } from "./input/SignUpInput";
 import { AuthService } from "./auth.service";
 import {
@@ -13,11 +13,19 @@ import {
 import { LocalAuthGuard } from "./localAuth.guard";
 import { ReqWithUser } from "../interfaces";
 import { Response } from "express";
+import { JwtService } from "@nestjs/jwt";
+import { UsersService } from "../users/users.service";
+import { Me } from "../utils/Me";
+import User from "../users/user.entity";
 import JwtAuthGuard from "./jwtAuth.guard";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Post("sign-up")
   async signUp(
@@ -25,26 +33,13 @@ export class AuthController {
     @Res() res: Response,
   ): Promise<Response> {
     const user = await this.authService.signUp(input);
-    const token = this.authService.generateToken({ userId: user.id });
-    res.cookie("token", `Bearer ${token}`, {
-      httpOnly: true,
-    });
-
-    return res.sendStatus(200);
+    return this.authService.handleTokenResponse(user, res);
   }
 
   @UseGuards(LocalAuthGuard)
   @Post("sign-in")
-  async signIn(
-    @Req() req: ReqWithUser,
-    @Res() res: Response,
-  ): Promise<Response> {
-    const token = this.authService.generateToken({ userId: req.user.id });
-    res.cookie("token", `Bearer ${token}`, {
-      httpOnly: true,
-    });
-
-    return res.sendStatus(200);
+  async signIn(@Me() user: User, @Res() res: Response): Promise<Response> {
+    return this.authService.handleTokenResponse(user, res);
   }
 
   @Post("sign-out")
@@ -53,9 +48,9 @@ export class AuthController {
     return res.sendStatus(200);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
-  getMe(@Req() req: ReqWithUser): PublicUser {
-    return req.user;
+  @UseGuards(JwtAuthGuard)
+  getMe(@Me() user: User): User {
+    return user;
   }
 }

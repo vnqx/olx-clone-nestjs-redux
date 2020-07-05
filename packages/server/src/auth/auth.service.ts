@@ -12,7 +12,9 @@ import { SignInInput } from "./input/SignInInput";
 import { JwtService } from "@nestjs/jwt";
 import { UsersService } from "../users/users.service";
 import * as bcryptjs from "bcryptjs";
-import {TokenPayload} from "../interfaces";
+import { TokenPayload } from "../interfaces";
+import { Request, Response } from "express";
+import User from "../users/user.entity";
 
 @Injectable()
 export class AuthService {
@@ -33,8 +35,6 @@ export class AuthService {
         passwordHash,
       });
 
-      delete createdUser.passwordHash;
-
       return createdUser;
     } catch (error) {
       if (error?.code === PostgresErrorCode.UniqueViolation) {
@@ -50,17 +50,35 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<PublicUser> {
     const user = await this.usersService.getByEmail(email);
-    const isPasswordValid = await bcryptjs.compare(
-      password,
-      user.passwordHash,
-    );
+    const isPasswordValid = await bcryptjs.compare(password, user.passwordHash);
     if (!isPasswordValid) throw new UnauthorizedException();
 
-    delete user.passwordHash
-    return user
+    delete user.passwordHash;
+    return user;
   }
 
   generateToken(payload: TokenPayload): string {
-    return this.jwtService.sign(payload)
+    return this.jwtService.sign(payload);
+  }
+
+  extractTokenFromRequest(req: Request): string | null {
+    const tokenWithBearer: string | undefined = req.cookies.token;
+    if (tokenWithBearer) {
+      return tokenWithBearer.replace("Bearer ", "");
+    }
+    return null;
+  }
+
+  handleTokenResponse(user: User | PublicUser, res: Response): Response {
+    const token = this.generateToken({
+      userId: user.id,
+      email: user.email,
+    });
+
+    res.cookie("token", `Bearer ${token}`, {
+      httpOnly: true,
+    });
+
+    return res.sendStatus(200);
   }
 }

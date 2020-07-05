@@ -6,6 +6,8 @@ import JwtAuthGuard from "../auth/jwtAuth.guard";
 import Chat from "./chat.entity";
 import { SendMessageDto } from "./dto/sendMessage.dto";
 import Message from "../messages/message.entity";
+import { Me } from "../utils/Me";
+import User from "../users/user.entity";
 
 @Controller()
 export class ChatsController {
@@ -13,27 +15,27 @@ export class ChatsController {
 
   @Get("chats")
   @UseGuards(JwtAuthGuard)
-  getAll(@Req() req: ReqWithUser): Promise<Chat[]> {
-    return this.chatsService.getAllChats(req.user.id);
+  getAll(@Me() me: User): Promise<Chat[]> {
+    return this.chatsService.getAllChats(me.id);
   }
 
   @Post("chats/:id")
   @UseGuards(JwtAuthGuard)
   sendMessage(
-    @Req() req: ReqWithUser,
+    @Me() me: User,
     @Param("id") id: string,
     @Body() sendMessageDto: SendMessageDto,
   ): Promise<Message> {
     return this.chatsService.sendMessage({
       chatId: id,
       sendMessageDto,
-      userId: req.user.id,
+      userId: me.id,
     });
   }
 
   @Get("postings/:id/chat")
   @UseGuards(JwtAuthGuard)
-  getOne(@Req() req: ReqWithUser, @Param("id") id: string): Promise<Chat> {
-    return this.chatsService.getChat(id, req.user.id);
+  getOne(@Me() me: User, @Param("id") id: string): Promise<Chat> {
+    return this.chatsService.getChat(id, me.id);
   }
 }

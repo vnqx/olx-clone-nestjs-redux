@@ -1,8 +1,9 @@
 import { AccountService } from "./account.service";
-import { Controller, Get, UseGuards, Req } from "@nestjs/common";
+import { Controller, Get, UseGuards } from "@nestjs/common";
 import JwtAuthGuard from "../auth/jwtAuth.guard";
-import { ReqWithUser } from "../interfaces";
 import Posting from "../postings/posting.entity";
+import { Me } from "../utils/Me";
+import User from "../users/user.entity";
 
 @Controller("account")
 export class AccountController {
@@ -10,13 +11,13 @@ export class AccountController {
 
   @Get("followed")
   @UseGuards(JwtAuthGuard)
-  getAllFollowedPostings(@Req() req: ReqWithUser): Promise<Posting[]> {
-    return this.accountService.getAllFollowedPostings(req.user.id);
+  getAllFollowedPostings(@Me() me: User): Promise<Posting[]> {
+    return this.accountService.getAllFollowedPostings(me.id);
   }
 
   @Get("postings")
   @UseGuards(JwtAuthGuard)
-  getAllMyPostings(@Req() req: ReqWithUser): Promise<Posting[]> {
-    return this.accountService.getAllMyPostings(req.user.id);
+  getAllMyPostings(@Me() me: User): Promise<Posting[]> {
+    return this.accountService.getAllMyPostings(me.id);
   }
 }

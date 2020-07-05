@@ -15,6 +15,8 @@ import {
 import Posting from "./posting.entity";
 import PostingsService from "./postings.service";
 import JwtAuthGuard from "../auth/jwtAuth.guard";
+import { Me } from "../utils/Me";
+import User from "../users/user.entity";
 
 @Controller("postings")
 export default class PostingsController {
@@ -42,34 +44,32 @@ export default class PostingsController {
   editPosting(
     @Param("id") id: string,
     @Body() createPostingDto: CreatePostingDto,
-    @Req() req: ReqWithUser,
+    @Me() me: User,
   ): Promise<Posting> {
-    return this.postingsService.editPosting(id, createPostingDto, req.user.id);
+    return this.postingsService.editPosting(id, createPostingDto, me.id);
   }
 
   @Patch(":id/follow")
   @UseGuards(JwtAuthGuard)
   followPosting(
     @Param("id") id: string,
-    @Req() req: ReqWithUser,
+    @Me() me: User,
   ): Promise<FollowPosting> {
-    return this.postingsService.followPosting(id, req.user);
+    return this.postingsService.followPosting(id, me);
   }
 
   @Post("create")
   @UseGuards(JwtAuthGuard)
   create(
     @Body() createPostingDto: CreatePostingDto,
-    @Req() req: ReqWithUser,
+    @Me() me: User,
   ): Promise<Posting> {
-    return this.postingsService.create(createPostingDto, req.user);
+    return this.postingsService.create(createPostingDto, me);
   }
 
   @Delete(":id")
   @UseGuards(JwtAuthGuard)
-  delete(@Param("id") id: string, @Req() req: ReqWithUser): Promise<boolean> {
-    console.log("hi");
-
-    return this.postingsService.delete(id, req.user);
+  delete(@Param("id") id: string, @Me() me: User): Promise<boolean> {
+    return this.postingsService.delete(id, me.id);
   }
 }

@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
+import {
+  ForbiddenException,
+  HttpException,
+  HttpStatus,
+  InternalServerErrorException,
+  NotFoundException,
+} from "@nestjs/common";
 import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -55,18 +61,40 @@ export class ChatsService {
     return savedMessage;
   }
 
+  private async getLastMessage(chat: Chat): Promise<Message | undefined> {
+    const message = await this.messagesRepository.findOne({
+      where: { chat },
+      order: { sentTime: "DESC" },
+    });
+    return message;
+  }
+
   async getAllChats(userId: string): Promise<Chat[]> {
     const user = await this.usersRepository.findOne(userId, {
-      relations: ["chats"],
+      relations: ["chats", "chats.posting"],
     });
 
-    if (!user)
-      throw new HttpException(
-        "User with this id doesn't exist",
-        HttpStatus.NOT_FOUND,
-      );
+    if (!user) throw new NotFoundException();
 
-    return user.chats;
+    const { chats } = user;
+
+    // get last message for the chat preview
+    const chatsLastMessages = await Promise.all(
+      chats.map((chat) => this.getLastMessage(chat)),
+    );
+
+    chats.forEach((chat, i) => {
+      const lastMessage = chatsLastMessages[i];
+
+      if (lastMessage) {
+        chat.messages = [lastMessage];
+      }
+    });
+
+    // filter out chats that are empty, it surely can be better designed, no time for now
+    const nonEmptyChats = chats.filter((chat) => chat.messages);
+
+    return nonEmptyChats;
   }
 
   async getChat(postingId: string, userId: string): Promise<Chat> {
@@ -74,17 +102,7 @@ export class ChatsService {
       relations: ["user", "chats", "chats.users"],
     });
 
-    if (!posting)
-      throw new HttpException(
-        "Posting with this id doesn't exist",
-        HttpStatus.NOT_FOUND,
-      );
-
-    if (posting.user.id === userId)
-      throw new HttpException(
-        "You can't chat with yourself",
-        HttpStatus.FORBIDDEN,
-      );
+    if (!posting) throw new NotFoundException();
 
     const { user: postingOwner, chats: postingChats } = posting;
 
@@ -95,19 +113,19 @@ export class ChatsService {
 
     if (chat) {
       const fullChat = await this.chatsRepository.findOne(chat.id, {
-        relations: ["messages", "posting"],
+        relations: ["messages", "posting", "posting.user"],
       });
 
-      if (!fullChat)
-        throw new HttpException(
-          "Something went wrong",
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
+      // because it's got just created
+      if (!fullChat) throw new InternalServerErrorException();
 
       return fullChat;
     }
 
     // chat doesn't exist so create a new one
+
+    // can't message self check first
+    if (posting.user.id === userId) throw new ForbiddenException();
 
     const me = await this.usersRepository.findOne(userId);
     if (!me)
