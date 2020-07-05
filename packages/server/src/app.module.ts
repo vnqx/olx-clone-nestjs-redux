@@ -7,7 +7,7 @@ import { ConfigModule } from "@nestjs/config";
 import { UploadModule } from "./upload/upload.module";
 import { AccountModule } from "./account/account.module";
 import { ChatsModule } from "./chats/chats.module";
-import Joi from "@hapi/joi";
+import * as Joi from "@hapi/joi";
 
 @Module({
   imports: [

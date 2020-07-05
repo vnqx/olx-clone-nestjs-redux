@@ -1,26 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
     "module": "commonjs",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "strict": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
     "declaration": true,
     "removeComments": true,
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "alwaysStrict": true,
-    "noImplicitAny": true,
-    "types": ["node"],
-    "jsx": "react",
-    "noEmit": true,
     "incremental": true
   }
 }

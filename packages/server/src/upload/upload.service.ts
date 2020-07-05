@@ -2,7 +2,7 @@ import { ConfigService } from "@nestjs/config";
 import { Injectable } from "@nestjs/common";
 import { FileDto, UploadedFile } from "../postings/dto/file.dto";
 import { Readable } from "typeorm/platform/PlatformTools";
-import cloudinary from "cloudinary";
+import * as cloudinary from "cloudinary";
 
 @Injectable()
 export class UploadService {
