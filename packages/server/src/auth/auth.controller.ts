@@ -21,11 +21,7 @@ import JwtAuthGuard from "./jwtAuth.guard";
 
 @Controller("auth")
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly jwtService: JwtService,
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post("sign-up")
   async signUp(
