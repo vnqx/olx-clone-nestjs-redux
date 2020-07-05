@@ -4,6 +4,7 @@ import { StarBorder, Star } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { followPosting } from "../reducers/followedPostingsReducer";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   id: string;
@@ -21,14 +22,17 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function FollowButton({ id }: Props): React.ReactElement {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const followedPostings = useSelector(
-    (state: RootState) => state.followedPostings,
-  );
+  const navigate = useNavigate();
+  const { followedPostings, me } = useSelector((state: RootState) => state);
   const followedPostingIds = followedPostings.map((posting) => posting.id);
   const isFollowed = followedPostingIds.includes(id);
 
   function handleClick() {
-    dispatch(followPosting(id));
+    if (!me) {
+      navigate("/auth/sign-in");
+    } else {
+      dispatch(followPosting(id));
+    }
   }
 
   return (

@@ -56,6 +56,7 @@ export default function Header(): React.ReactElement {
             <>
               <NavLink to="postings/create" text="New" />
               <NavLink to="account/followed" text="Followed" />
+              <NavLink to="chats" text="chats" />
               <SignOutButton />
             </>
           ) : (

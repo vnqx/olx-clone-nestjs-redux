@@ -8,7 +8,7 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
-import { getDaysElapsed } from "../utils/getDaysElapsed";
+import { getDaysAgoString } from "../utils/getDaysAgoString";
 import { Link, useNavigate } from "react-router-dom";
 import { Posting } from "../interfaces";
 
@@ -79,10 +79,7 @@ export default function CustomPostingItem({
             ${posting.price}
           </Typography>
           <Typography variant="body2">
-            Updated{" "}
-            {getDaysElapsed(posting.updatedAt) > 1
-              ? `${getDaysElapsed(posting.updatedAt)} days ago`
-              : "today"}
+            Updated {getDaysAgoString(posting.updatedAt)}
           </Typography>
         </CardContent>
         <div className={classes.controls}>{controls}</div>

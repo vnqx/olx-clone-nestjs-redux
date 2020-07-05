@@ -17,7 +17,7 @@ import EditPosting from "./pages/EditPosting";
 import Chats from "./pages/Chats";
 import FullChat from "./pages/FullChat";
 
-export default function App(): React.ReactElement {
+export default function App(): React.ReactElement | null {
   const dispatch = useDispatch();
   const me = useSelector((state: RootState) => state.me);
 
@@ -28,6 +28,8 @@ export default function App(): React.ReactElement {
       dispatch(loadMe());
     }
   }, [dispatch, me]);
+
+  if (me === null) return null;
 
   return (
     <>

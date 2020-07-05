@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Chat } from "./../interfaces";
+import { ChatPreview } from "./../interfaces";
 import chatsService from "../services/chatsService";
 
 export enum ChatActionType {
@@ -8,19 +8,19 @@ export enum ChatActionType {
 
 export interface LoadChatsAction {
   type: typeof ChatActionType.LOAD_CHATS;
-  payload: Chat[];
+  payload: ChatPreview[];
 }
 
 export type ChatAction = LoadChatsAction;
 
-export type ChatState = Chat[];
+export type ChatState = ChatPreview[];
 
 export const initialState: ChatState = [];
 
 export default function chatsReducer(
   state = initialState,
   action: ChatAction,
-): Chat[] {
+): ChatPreview[] {
   switch (action.type) {
     case ChatActionType.LOAD_CHATS:
       return action.payload;

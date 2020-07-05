@@ -21,7 +21,7 @@ export interface RemoveMeAction {
 
 export type MeAction = LoadMeAction | RemoveMeAction;
 
-export type MeState = User | null;
+export type MeState = User | null | "";
 
 export const initialState: MeState = null;
 

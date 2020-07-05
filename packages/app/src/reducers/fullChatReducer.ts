@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Chat, Message } from "./../interfaces";
+import { ChatPreview, FullChat, Message } from "./../interfaces";
 import chatsService from "../services/chatsService";
 
 export enum FullChatActionType {
@@ -9,7 +9,7 @@ export enum FullChatActionType {
 
 export interface LoadChatActionType {
   type: FullChatActionType.LOAD_CHAT;
-  payload: Chat;
+  payload: FullChat;
 }
 
 export interface AddMessageAction {
@@ -19,7 +19,7 @@ export interface AddMessageAction {
 
 export type FullChatAction = LoadChatActionType | AddMessageAction;
 
-export type FullChatState = Chat | null;
+export type FullChatState = FullChat | null;
 
 export const initialState: FullChatState = null;
 

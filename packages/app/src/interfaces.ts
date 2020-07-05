@@ -30,9 +30,8 @@ export interface User {
   id: string;
 }
 
-export interface Chat {
+export interface ChatPreview {
   id: string;
-  users: User[];
   posting: Posting;
   messages: Message[];
 }
@@ -41,5 +40,15 @@ export interface Message {
   id: string;
   content: string;
   user: User;
-  chat: Chat;
+  chat: ChatPreview;
+  sentTime: Date;
+}
+
+export interface PostingWithUser extends Posting {
+  user: User;
+}
+
+export interface FullChat extends ChatPreview {
+  users: User[];
+  posting: PostingWithUser;
 }

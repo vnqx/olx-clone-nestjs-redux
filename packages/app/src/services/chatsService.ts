@@ -1,18 +1,18 @@
-import { Chat, Message } from "./../interfaces";
+import { ChatPreview, Message } from "./../interfaces";
 import Axios from "axios";
 
 const baseUrl = "http://localhost:4000/chats";
 
-async function getAllChats(): Promise<Chat[]> {
-  const { data: chats } = await Axios.get<Chat[]>(baseUrl, {
+async function getAllChats(): Promise<ChatPreview[]> {
+  const { data: chats } = await Axios.get<ChatPreview[]>(baseUrl, {
     withCredentials: true,
   });
 
   return chats;
 }
 
-async function getChat(postingId: string): Promise<Chat> {
-  const { data: chat } = await Axios.get<Chat>(
+async function getChat(postingId: string): Promise<ChatPreview> {
+  const { data: chat } = await Axios.get<ChatPreview>(
     `http://localhost:4000/postings/${postingId}/chat`,
     { withCredentials: true },
   );

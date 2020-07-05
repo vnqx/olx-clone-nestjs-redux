@@ -15,7 +15,6 @@ export default function FullChat(): React.ReactElement {
   }, [dispatch, id]);
 
   const chat = useSelector((state: RootState) => state.fullChat);
-
   if (!chat) return <div>loading...</div>;
 
   return (
