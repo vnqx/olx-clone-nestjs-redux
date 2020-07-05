@@ -17,6 +17,7 @@ import EditPosting from "./pages/EditPosting";
 import Chats from "./pages/Chats";
 import FullChat from "./pages/FullChat";
 import { Container, createStyles, makeStyles, Theme } from "@material-ui/core";
+import { loadMyPostings } from "./reducers/myPostingsReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,6 +35,7 @@ export default function App(): React.ReactElement | null {
   useEffect(() => {
     if (me) {
       dispatch(loadFollowedPostings());
+      dispatch(loadMyPostings());
     } else {
       dispatch(loadMe());
     }

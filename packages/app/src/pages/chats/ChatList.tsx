@@ -2,25 +2,17 @@ import React from "react";
 import ChatItem from "./ChatItem";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-import { createStyles, List, Paper, Theme } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: "100%",
-      maxWidth: "36ch",
-      backgroundColor: theme.palette.background.paper,
-    },
-    inline: {
-      display: "inline",
-    },
-  }),
-);
+import { Paper, Typography } from "@material-ui/core";
 
 export default function ChatList(): React.ReactElement {
-  const classes = useStyles();
   const chats = useSelector((state: RootState) => state.chats);
+
+  if (chats.length === 0)
+    return (
+      <Typography variant="h3" align="center">
+        Send your first message for the chats to appear
+      </Typography>
+    );
 
   return (
     <Paper>

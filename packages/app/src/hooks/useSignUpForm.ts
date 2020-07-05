@@ -28,25 +28,28 @@ export default function useSignUpForm(): UseSignUpForm {
     passwordConfirm: "",
   };
 
+  const lowercaseRegex = /(?=.*[a-z])/;
+  const uppercaseRegex = /(?=.*[A-Z])/;
+  const numericRegex = /(?=.*[0-9])/;
+
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().min(2).max(20),
     lastName: Yup.string().min(2).max(20),
-    // email: Yup.string().email().required(),
-    // password: Yup.string()
-    //   // .matches(lowercaseRegex, "One lowercase required")
-    //   // .matches(uppercaseRegex, "One uppercase required")
-    //   // .matches(numericRegex, "One numeric required")
-    // .min(2)
-    //   .max(50)
-    // .required(),
-    // passwordConfirm: Yup.string()
-    //   .oneOf([Yup.ref("password")], "Passwords don't match")
-    //   .required(),
+    email: Yup.string().email().required(),
+    password: Yup.string()
+      .matches(lowercaseRegex, "One lowercase required")
+      .matches(uppercaseRegex, "One uppercase required")
+      .matches(numericRegex, "One numeric required")
+      .min(4)
+      .max(50)
+      .required(),
+    passwordConfirm: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords don't match")
+      .required(),
   });
 
   function handleSubmit(input: SignUpFormFields) {
     dispatch(signUp(input, navigate));
-    return true;
   }
 
   return { initialValues, validationSchema, handleSubmit };

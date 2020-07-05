@@ -11,12 +11,10 @@ import { loadFullPosting } from "../reducers/fullPostingReducer";
 import { useDispatch, useSelector } from "react-redux";
 import EditPostingForm from "./editPosting/EditPostingForm";
 import { RootState } from "../store";
-import { loadPhotos } from "../reducers/photosReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      marginTop: theme.spacing(8),
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -33,7 +31,6 @@ export default function EditPosting(): React.ReactElement {
 
   useEffect(() => {
     dispatch(loadFullPosting(id));
-    // dispatch(loadPhotos(posting.photos));
   }, [dispatch, id]);
 
   if (!posting) return <div>loading...</div>;

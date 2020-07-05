@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
@@ -19,6 +19,8 @@ import { RootState } from "../store";
 import { loadFullPosting } from "../reducers/fullPostingReducer";
 import FollowButton from "../components/FollowButton";
 import PhonePopover from "./fullPosting/PhonePopover";
+import EditPostingButton from "./account/EditPostingButton";
+import DeletePostingButton from "./account/DeletePostingButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,11 +79,17 @@ export default function FullPosting(): React.ReactElement {
     dispatch(loadFullPosting(id));
   }, [dispatch, id]);
 
-  const posting = useSelector((state: RootState) => state.fullPosting);
+  const { myPostings, fullPosting: posting } = useSelector(
+    (state: RootState) => state,
+  );
 
   // in case there's loaded some posting in the store already
   // not to display the old one
   if (posting?.id !== id) return <div>loading...</div>;
+
+  const isMyPosting = myPostings
+    .map((posting) => posting.id)
+    .includes(posting.id);
 
   return (
     <Container component="main" maxWidth="sm">
@@ -112,13 +120,20 @@ export default function FullPosting(): React.ReactElement {
             <PhonePopover phone={posting.phone} />
           </div>
           <div className={classes.message}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => navigate(`/postings/${posting.id}/chat`)}
-            >
-              Send message
-            </Button>
+            {!isMyPosting ? (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => navigate(`/postings/${posting.id}/chat`)}
+              >
+                Send message
+              </Button>
+            ) : (
+              <>
+                <EditPostingButton postingId={posting.id} />
+                <DeletePostingButton postingId={posting.id} />
+              </>
+            )}
           </div>
         </CardActions>
       </Card>

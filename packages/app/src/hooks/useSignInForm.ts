@@ -23,14 +23,8 @@ export default function useSignInForm(): UseSignInForm {
   };
 
   const validationSchema = Yup.object().shape({
-    // email: Yup.string().email().required(),
-    // password: Yup.string()
-    //   // .matches(lowercaseRegex, "One lowercase required")
-    //   // .matches(uppercaseRegex, "One uppercase required")
-    //   // .matches(numericRegex, "One numeric required")
-    // .min(2)
-    //   .max(50)
-    // .required(),
+    email: Yup.string().email().required(),
+    password: Yup.string().required(),
   });
 
   function handleSubmit(input: SignInFormFields) {
