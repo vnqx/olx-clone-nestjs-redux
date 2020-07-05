@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
     toolbar: {
       "& > *": {
         textDecoration: "none",
-        margin: theme.spacing(0, 1),
       },
       display: "flex",
       justifyContent: "center",
