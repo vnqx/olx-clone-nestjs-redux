@@ -13,7 +13,10 @@ export default class Message {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @ManyToOne(() => Chat, (chat) => chat.messages, { cascade: true })
+  @ManyToOne(() => Chat, (chat) => chat.messages, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   chat!: Chat;
 
