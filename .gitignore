@@ -7,3 +7,4 @@ packages/*/.env
 packages/*/.env.development
 packages/*/.env.test
 packages/*/data
+packages/*/*.zip

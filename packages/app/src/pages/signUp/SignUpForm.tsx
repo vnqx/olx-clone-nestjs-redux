@@ -45,10 +45,10 @@ export default function SignUpForm(): React.ReactElement {
           />
           <MyTextField name="lastName" type="text" label="Last name" />
           <MyTextField name="email" type="email" label="Email" />{" "}
-          <MyTextField name="password" type="text" label="Password" />
+          <MyTextField name="password" type="password" label="Password" />
           <MyTextField
             name="passwordConfirm"
-            type="text"
+            type="password"
             label="Confirm password"
           />
           <Button

@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/index.tsx",
   target: "web",
-  mode: "development",
+  mode: "production",
   devServer: {
     port: 3000,
     historyApiFallback: true,
