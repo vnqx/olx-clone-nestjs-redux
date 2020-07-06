@@ -6,6 +6,7 @@ export enum MyPostingsActionType {
   LOAD_MY_POSTINGS = "LOAD_MY_POSTINGS",
   DELETE_MY_POSTING = "DELETE_MY_POSTING",
   ADD_MY_POSTING = "ADD_MY_POSTING",
+  EDIT_MY_POSTING = "EDIT_MY_POSTING",
 }
 
 export type MyPostingsState = Posting[];
@@ -25,10 +26,16 @@ export interface AddMyPostingAction {
   payload: Posting;
 }
 
+export interface EditMyPostingAction {
+  type: typeof MyPostingsActionType.EDIT_MY_POSTING;
+  payload: Posting;
+}
+
 export type MyPostingsAction =
   | LoadMyPostingsAction
   | DeleteMyPostingAction
-  | AddMyPostingAction;
+  | AddMyPostingAction
+  | EditMyPostingAction;
 
 export const initialState: MyPostingsState = [];
 
@@ -43,6 +50,10 @@ export default function myPostingsReducer(
       return state.filter((posting) => posting.id !== action.payload);
     case MyPostingsActionType.ADD_MY_POSTING:
       return state.concat(action.payload);
+    case MyPostingsActionType.EDIT_MY_POSTING:
+      return state.map((posting) =>
+        posting.id === action.payload.id ? action.payload : posting,
+      );
     default:
       return state;
   }

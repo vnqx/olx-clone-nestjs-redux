@@ -2,6 +2,7 @@ import { PostingFormFields, Posting } from "./../interfaces";
 import postingsService from "../services/postingsService";
 import { Dispatch } from "redux";
 import { MyPostingsActionType } from "./myPostingsReducer";
+import { PhotosActionType } from "./photosReducer";
 
 export enum FullPostingActionType {
   LOAD_FULL_POSTING = "LOAD_FULL_POSTING",
@@ -59,6 +60,10 @@ export function createPosting(
       payload: posting,
     });
 
+    dispatch({
+      type: PhotosActionType.RESET_PHOTOS,
+    });
+
     navigate(`/postings/${posting.id}`);
   };
 }
@@ -73,6 +78,15 @@ export function editPosting(
     dispatch({
       type: FullPostingActionType.LOAD_FULL_POSTING,
       payload: updatedPosting,
+    });
+
+    dispatch({
+      type: MyPostingsActionType.EDIT_MY_POSTING,
+      payload: updatedPosting,
+    });
+
+    dispatch({
+      type: PhotosActionType.RESET_PHOTOS,
     });
 
     navigate(`/postings/${updatedPosting.id}`);
