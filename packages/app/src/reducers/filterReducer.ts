@@ -34,18 +34,14 @@ export default function filterReducer(
 }
 
 export function changeFilter(newFilter: string) {
-  return async (dispatch: Dispatch): Promise<void> => {
-    dispatch({
-      type: FilterActionType.CHANGE,
-      payload: newFilter,
-    });
+  return {
+    type: FilterActionType.CHANGE,
+    payload: newFilter,
   };
 }
 
 export function resetFilter() {
-  return async (dispatch: Dispatch): Promise<void> => {
-    dispatch({
-      type: FilterActionType.RESET,
-    });
+  return {
+    type: FilterActionType.RESET,
   };
 }
